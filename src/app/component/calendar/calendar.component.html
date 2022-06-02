@@ -1,0 +1,120 @@
+<div class="leave-form-flex">
+    <mat-card>
+      <mat-card-title>
+        Leave Application for User
+      </mat-card-title>
+      <mat-card-content>
+        
+        <form>
+            <h5 class="text-danger">* All fields Mandatory</h5>
+        
+            <!-- Name -->
+            <div class="row-content">
+              <label class="label-text" for="name">
+                  Full Name <span style="color: red"> *</span>
+                </label>
+        
+              <mat-form-field appearance="fill" >
+                <mat-label>Users</mat-label>
+                <mat-select>
+                  <mat-option>--</mat-option>
+                  <mat-option>
+                    Options
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        
+
+            </div>
+        
+            <!-- Email Address -->
+            <div class="row-content">
+              <label class="label-text" for="emailAddress" style="margin-left: 0px"
+                >Email <span style="color: red">*</span>
+              </label>
+        
+        
+                <mat-form-field appearance="fill" style="width: 100%;">
+                  <mat-label>Enter your email</mat-label>
+                  <input matInput placeholder="abc@example.com"
+                  name="emailAddress" value="abc@gmail.com">
+                </mat-form-field>
+            </div>
+        
+            <!-- Leave Type -->
+            <div class="row-content">
+              <label
+                class="label-text"
+                for="leaveType"
+                required
+                ><span style="color: red"> <small></small></span>Leave Type <span style="color: red">*</span> </label
+              >
+              <div class="leave-types">
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1">Vacation</mat-radio-button>
+                    <mat-radio-button value="2">Medical</mat-radio-button>
+                    <mat-radio-button value="3">Business Tour</mat-radio-button>
+                    <mat-radio-button value="4">Personal</mat-radio-button>
+                  </mat-radio-group>
+              </div>
+            </div>
+        
+            <div class="row-content" style="margin-top: 20px;">
+              <label for="startDate" class="label-text"
+                >Select Date <span style="color: red"> * </span></label
+              >
+              <div class="leave-day-types">
+                <mat-slide-toggle>Back Dated</mat-slide-toggle>
+                <mat-slide-toggle>Half day</mat-slide-toggle>
+              </div>
+            </div>
+            <div class="row-content" style="margin-top: 20px;">
+                <div class="datepicker">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a date or date range</mat-label>
+                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                          <input matStartDate formControlName="start" placeholder="Start date">
+                          <input matEndDate formControlName="end" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                      </mat-form-field>
+                </div>
+                <!-- <p>Selected range: {{range.value | json}}</p> -->
+            </div>
+        
+           
+        
+            <!-- Notes -->
+            <!-- <div class="row-content">
+              <label for="emailAddress " style="color: red">*</label>
+              <label class="label-text" for="notes" style="margin-left: -5px"
+                ><span style="color: red"> <small></small></span>Reason</label
+              >
+              <textarea
+                class="input"
+                name="Notes"
+                id="notes"
+                placeholder=""
+                style="height: 100px"
+                style="margin-left: 8px"
+              ></textarea>
+            </div> -->
+        
+            <!-- Submit, Cancel, Reset Buttons -->
+                <div class="button-panel">
+                    <mat-card-actions>
+                        <div class="button-flex-container">
+                          <button mat-raised-button color="primary">Cancle</button>
+                          <button mat-raised-button color="primary">Reset</button>
+                          <button mat-raised-button color="primary" type="submit">Submit</button>
+                        </div>
+                      </mat-card-actions>
+                </div>
+            </form>
+
+      </mat-card-content>
+     
+    </mat-card>
+  </div>

@@ -1,0 +1,237 @@
+<div class="form-content" style="margin-top: 65px">
+  <!-- <form   (ngSubmit)="onSubmit()" >                  -->
+  <form [formGroup]="employeeForm">
+    <div class="form-head">Employee Update Leave form</div>
+    <h5 class="text-danger">* indicates mandatory Fields</h5>
+
+    <!-- Name -->
+    <div class="row-content">
+      <label for="name " style="color: red">*</label>
+      <label class="label-text" for="name"
+        ><span style="color: red"> <small></small></span>FullName</label
+      >
+      <!-- <input formControlName="name" [(ngModel)]= "employee.name" name="name" class="input" type="text" id="first" name="name"
+              placeholder="Your name.." required [ngModelOptions]= "{ standalone: true }" />     -->
+      <input
+        formControlName="name"
+        [(ngModel)]="employee.name"
+        name="name"
+        class="input"
+        type="text"
+        id="name"
+        placeholder="Your name.."
+        required
+      />
+      <span
+        class="text-danger"
+        *ngIf="
+          employeeForm.controls['name'].dirty &&
+          employeeForm.hasError('required', 'name')
+        "
+        style="width: 225px"
+        >* Name is required</span
+      >
+    </div>
+
+    <!-- Email Address -->
+    <div class="row-content">
+      <label for="name " style="color: red">*</label>
+      <label class="label-text" for="emailAddress"
+        ><span style="color: red"> <small></small></span>Email
+      </label>
+
+      <!-- <input formControlName="name" [(ngModel)]= "employee.name" name="name" class="input" type="text" id="first" name="name"
+              placeholder="Your name.." required [ngModelOptions]= "{ standalone: true }" />     -->
+      <input
+        formControlName="emailAddress"
+        [(ngModel)]="employee.emailAddress"
+        name="emailAddress"
+        class="input"
+        type="text"
+        id="emailAddress"
+        name="emailAddress"
+        placeholder="Your email address is.."
+        required
+        style="margin-left: 23px"
+      />
+      <span
+        class="text-danger"
+        *ngIf="
+          employeeForm.controls['emailAddress'].dirty &&
+          employeeForm.hasError('required', 'emailAddress')
+        "
+        style="width: 288px"
+        >*Email Address is required</span
+      >
+    </div>
+
+    <!-- Leave Type -->
+    <div class="row-content">
+      <label for="emailAddress " style="color: red">*</label>
+      <label class="label-text" for="leaveType" style="margin-left: -5px"
+        ><span style="color: red"> <small></small></span>Leave Type</label
+      >
+      <div>
+        <input
+          type="radio"
+          name="leaveType"
+          value="Medical"
+          formControlName="leaveType"
+          [(ngModel)]="employee.leaveType"
+          required
+        />
+        <label class="text" for="medical">Medical</label>
+        <input
+          type="radio"
+          name="leaveType"
+          value="Vacation"
+          formControlName="leaveType"
+          [(ngModel)]="employee.leaveType"
+          required
+        />
+        <label class="text" for="vacation">Vacation</label>
+        <input
+          formControlName="leaveType"
+          [(ngModel)]="employee.leaveType"
+          type="radio"
+          name="leaveType"
+          id="business tour"
+          value="Business Tour"
+        />
+        <label class="text" for="business tour">Business Tour</label>
+        <input
+          formControlName="leaveType"
+          [(ngModel)]="employee.leaveType"
+          type="radio"
+          name="leaveType"
+          id="backed up"
+          value="Backed Up"
+          checked
+        />
+        <label class="text" for="backed up">Back Dated </label>
+        <span
+          class="text-danger"
+          *ngIf="
+            employeeForm.controls['leaveType'].dirty &&
+            employeeForm.hasError('required', 'leaveType')
+          "
+          >* Leave type Selection is required</span
+        >
+      </div>
+    </div>
+
+    <!-- Date -->
+    <div class="row-content">
+      <label for="emailAddress " style="color: red">*</label>
+      <label for="leaveStartDate" class="label-text" style="margin-left: -5px"
+        ><span style="color: red"> <small></small></span>Start Date</label
+      >
+      <mat-form-field color="accent">
+        <input
+          formControlName="leaveStartDate"
+          [(ngModel)]="employee.leaveStartDate"
+          matInput
+          [matDatepicker]="myDatePickerr"
+          (dateChange)="dateChange($event)"
+          placeholder=" Choose Your Start Date.."
+        />
+        <mat-datepicker-toggle
+          [for]="myDatePickerr"
+          matSuffix
+          style="color: sandybrown"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #myDatePickerr></mat-datepicker>
+      </mat-form-field>
+      <span class="text-danger" *ngIf="employeeForm.hasError('notValid')"
+        >Invalid Date:The date can't be less than Start Date</span
+      >
+    </div>
+
+    <div class="row-content">
+      <label for="leaveEndDate " style="color: red">*</label>
+      <label for="leaveEndDate" class="label-text" style="margin-left: -5px"
+        ><span style="color: red"> <small></small></span>End Date</label
+      >
+      <mat-form-field color="accent">
+        <input
+          formControlName="leaveEndDate"
+          [(ngModel)]="employee.leaveEndDate"
+          matInput
+          [matDatepicker]="myDatePicker"
+          [min]="minDate"
+          placeholder=" Choose Your End Date.."
+        />
+
+        <mat-datepicker-toggle
+          #leaveEndDate
+          color="primary"
+          [for]="myDatePicker"
+          matSuffix
+          style="color: sandybrown"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #myDatePicker></mat-datepicker>
+      </mat-form-field>
+      <span class="text-danger" *ngIf="employeeForm.hasError('notValid')"
+        >Invalid Date:The date can't be less than Start Date</span
+      >
+    </div>
+
+    <!-- Notes -->
+    <div class="row-content">
+      <label for="leaveEndDate " style="color: red">*</label>
+      <label class="label-text" for="notes" style="margin-left: -5px"
+        ><span style="color: red"> <small></small></span>Reason</label
+      >
+      <textarea
+        formControlName="notes"
+        [(ngModel)]="employee.notes"
+        class="input"
+        name="Notes"
+        id="notes"
+        placeholder=""
+        style="height: 100px"
+        style="margin-left: 8px"
+      ></textarea>
+      <span
+        class="text-danger"
+        *ngIf="
+          employeeForm.controls['notes'].dirty &&
+          employeeForm.hasError('required', 'notes')
+        "
+        style="width: 240px"
+        >*Reason is required</span
+      >
+    </div>
+
+    <!-- <Submit, Cancel, Reset Buttons -->
+    <div class="buttonParent">
+      <a
+        routerLink="/home"
+        href="./header.component.html"
+        class="resetButton button cancelButton"
+        style="margin-left: 80px"
+        >Cancel</a
+      >
+      <div class="submit-reset">
+        <button
+          type="button"
+          class="button submitButton"
+          id="submitButton"
+          [attr.disabled]="!employeeForm.valid ? true : null"
+          [disabled]="!employeeForm.valid"
+          (click)="onSubmit()"
+        >
+          Update
+        </button>
+
+        <!-- <button type="button" class="button submitButton"  id="submitButton " (click)= "onSubmit()">Update</button> -->
+
+        <!-- <button type="button"  [attr.disabled]="!employeeForm.valid ? true : null"  (click)="onSubmit()" style=" margin-left: 75px;
+             margin-right: 75px;">Update</button>  -->
+        <button type="button" class="resetButton button" (click)="clearForm()">
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

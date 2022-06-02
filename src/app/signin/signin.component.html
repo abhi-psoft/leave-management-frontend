@@ -1,0 +1,62 @@
+<mat-card class="main-card">
+    <img class="logo" src="../../../assets/images/prissoft logo.png" />
+    <mat-card-header>
+        <mat-card-title> Prismatic Softwares Private Limited </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #userForm="ngForm" novalidate>
+        <table class="full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="full-width">
+              <input matInput placeholder="Full Name"required #fullName="ngModel"
+              [class.is-invalid]="fullName.invalid && fullName.touched" type="text" name=fullName ngModel required
+              pattern="[A-Z][a-z]">
+              </mat-form-field>
+              <small class="text-danger" [hidden]="fullName.valid || fullName.untouched"> Minimum 4 letters with capital letter
+            </small>
+            </td>
+          </tr>
+          <tr>
+          <td><mat-form-field class="example-full-width">
+            <input matInput placeholder="E-mail Id" name="emailId"  #emailId="ngModel"
+            [class.is-invalid]="emailId.invalid && emailId.touched" type="email"  ngModel required>
+          </mat-form-field>
+          <small class="text-danger" [hidden]="emailId.valid || emailId.untouched">Email is required
+        </small>
+       </td>
+        </tr>
+        <tr>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="Password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched"
+              type="password" name="password" ngModel required pattern="[a-z]{4,}">
+            </mat-form-field>
+            <small class="text-danger" [hidden]="password.valid || password.untouched">Minimum 4 letters
+            </small>
+         </td>
+          </tr>
+          <tr>
+            <td><mat-form-field class="example-full-width">
+              <input matInput placeholder="Password"required #phoneNumber="ngModel"
+              [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" name="phoneNumber"
+              ngModel required placeholder="Phone number" pattern="[0-9]{10}$">
+            </mat-form-field>
+         </td>
+          </tr>
+        </table>
+        <div class="invalid" [hidden]= true>
+            invalid credentials
+        </div>
+        <mat-card-actions>
+            <div class="button">
+              <button mat-raised-button (click)="onSubmit(userForm)" color="primary">Signup</button>
+            </div>
+            <div class="button">
+                <button mat-raised-button (click)="login()" color="primary">Login</button>
+            </div>
+            </mat-card-actions>
+        </form>
+   
+    </mat-card-content>
+
+   </mat-card>

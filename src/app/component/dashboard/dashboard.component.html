@@ -1,0 +1,225 @@
+<!-- 
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="card">
+        <div class="card-body">
+          <img mat-card-image src="./assets/icons/user.png" />
+          <span>{{ username }}</span>
+          <br>
+          <span>{{currentDate | date: "dd/MM/yyyy" }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+      <div class="card">
+        <button mat-raised-button>
+        <div class="card-body">
+          <div class="card-title">Who's Not Today</div>
+          <div *ngFor="let employee of employees; let i = index" class="list">
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item"
+                *ngIf="isDateBetween(employee.leaveStartDate , employee.leaveEndDate)"
+              >
+                {{employee.name}} is on leave today!
+                <mat-divider></mat-divider>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </button>
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+      <div class="card">
+        <button mat-raised-button (click)="navigateToAllLeaves()">
+          <div class="card-body">
+            <div class="card-title">Upcoming Leaves</div>
+            <div *ngFor="let leave of leaves" class="list">
+              <mat-list>
+                <mat-list-item *ngIf="isDateGreater(leave.leaveStartDate, currentDate)">
+                  <i class="fa fa-plane" style="margin-right: 15px"></i>
+                  {{ leave.leaveStartDate | date: "dd/MM/yyyy" }}
+                  {{ leave.status == true ? "Not Approved" : "Approved" }}
+                  <mat-divider></mat-divider>
+              </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title" style="font-size: 20px; height: fit-content;">Remaining Leaves</div>
+          <mat-progress-spinner [value]="leavesNum" style="margin-top: 20px;"></mat-progress-spinner>
+          <div style="position:relative; top: -60px">{{leavesNum}}%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+      <div class="card">
+        <button mat-raised-button>
+        <div class="card-body">
+          <div class="card-title">Upcoming title</div>
+            <div *ngFor="let leave of leaves" class="list">
+              <mat-list>
+                <mat-list-item>
+                  
+                  <mat-divider></mat-divider>
+              </mat-list-item>
+              </mat-list>
+            </div>
+        </div>
+      </button>
+      </div>
+    </div>
+
+    <div class="col-sm-5">
+      <div class="card">
+        <button mat-raised-button>
+        <div class="card-body">
+          <div class="card-title">Upcoming title</div>
+          <div *ngFor="let leave of leaves" class="list">
+            <mat-list>
+              <mat-list-item>
+                
+                <mat-divider></mat-divider>
+            </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
+
+<mat-grid-list cols="5" rowHeight="2:1" md-gutter="100px" gutterSize="20px">
+  <mat-grid-tile rowspan="2" class="user-card">
+    <div class="card-body">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="card-body">
+              <img
+                src="./assets/icons/avatar.jpg"
+                alt="Avatar"
+                class="avatar"
+              />
+              <span style="font-size: 20px; font-weight: bold; margin-top: -5px;">{{
+                username
+              }}</span>
+              <br />
+              <span>{{ currentDate | date: "fullDate" }}</span>
+              <img src="./assets/icons/cursor.png" alt="Hover to see details" style="width: 15px; margin-top: 5px;">
+              <span>Hover for details</span>
+            </div>
+          </div>
+          <div class="flip-card-back">
+            <div class="card-body">
+              <span style="font-size: 20px;">{{username}}</span>
+              <p style="margin-top: 20px;">DOJ: May,16,2022</p>
+             <p>Software Engineer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile class="indicator-card" style="background-color: #4caf50">
+    <span class="indicator-data">{{totalLeaves}}</span>
+    <mat-grid-tile-footer>
+      <span class="title-footer"> Total Applicable Leaves</span>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+  <mat-grid-tile class="indicator-card" style="background-color: #ff9800">
+    <span class="indicator-data">{{usedLeaves}}</span>
+    <mat-grid-tile-footer>
+      <span class="title-footer"> Used Leaves</span>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+  <mat-grid-tile class="indicator-card" style="background-color: #c40000">
+    <span class="indicator-data">{{remained}}</span>
+    <mat-grid-tile-footer>
+      <span class="title-footer"> Leaves Remaining</span>
+    </mat-grid-tile-footer>
+  </mat-grid-tile>
+  <mat-grid-tile class="indicator-card" style="background-color: #80cbc4;">
+    <div class="card-body">
+      <mat-progress-spinner
+        [value]="leavesNum"
+        style="margin-top: 20px"
+      ></mat-progress-spinner>
+      <div style="position: relative; top: -60px">{{ leavesNum }}%</div>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="2" rowspan="2">
+        <div class="card-body">
+          <mat-grid-tile-header>
+            <span class="title-footer"> Your Leaves</span>
+          </mat-grid-tile-header>
+          <!-- <button mat-raised-button (click)="navigateToAllLeaves()"> -->
+            <marquee behavior="scroll" direction="up">
+          <div *ngFor="let leave of leaves" class="list">
+            <mat-list>
+              <mat-list-item *ngIf="isDateGreater(leave.leaveStartDate, currentDate)">
+                <i class="fa fa-plane" style="margin-right: 15px"></i>
+                {{ leave.leaveStartDate | date: "dd/MM/yyyy" }}
+                &nbsp; &nbsp; &nbsp; Leave is {{ leave.status == true ? "Not Approved" : "Approved" }}
+                <mat-divider></mat-divider>
+            </mat-list-item>
+            </mat-list>
+          </div>
+        </marquee>
+        <!-- </button> -->
+        </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="1" rowspan="2">
+    <div class="card-body">
+      <mat-grid-tile-header>
+        <span class="title-footer"> Who's Not Today!</span>
+      </mat-grid-tile-header>
+      <marquee behavior="scroll" direction="up">
+      <div *ngFor="let employee of employees" class="list">
+        <mat-list>
+          <mat-list-item *ngIf="isDateBetween(employee.leaveStartDate, employee.leaveEndDate)">
+              {{ employee.name }} is on leave today!
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </marquee>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile rowspan="1">
+    <mat-grid-tile-header>
+      <span class="title-footer"> Title</span>
+    </mat-grid-tile-header>
+  </mat-grid-tile>
+
+  <mat-grid-tile colspan="1" rowspan="2">
+    <div class="card-body">
+        <button mat-button style="margin-bottom: 50px;" (click)="navigateToAddLeave()">
+        <img mat-card-image src="./assets/images/apply.gif" />
+      </button>
+      <mat-grid-tile-footer>
+        <span class="title-footer"> Apply for new Leave</span>
+      </mat-grid-tile-footer>
+    </div>
+  </mat-grid-tile>
+  <!-- <mat-grid-tile colspan="2">10</mat-grid-tile> -->
+</mat-grid-list>

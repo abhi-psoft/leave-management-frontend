@@ -1,0 +1,81 @@
+:host {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0px;
+  }
+
+  .main-card{
+      background: rgb(242, 240, 245);
+  }
+
+  .mat-form-field {
+    width: 100%;
+    min-width: 500px;
+  }
+
+  mat-card-content{
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+  }
+
+  mat-card-header ,
+  mat-card-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .error {
+    padding: 16px;
+    width: 300px;
+    color: white;
+    background-color: red;
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+  }
+  .main-card{
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+  }
+
+  .mat-raised-button {
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    min-width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration:none;
+    border: none;
+    outline: none;
+ }
+
+ .invalid{
+     color: red;
+     display: flex;
+     justify-content: center;
+     margin-bottom: 10px;
+     font-size: 20px;
+ }
+
+
+
+ 
+
+   

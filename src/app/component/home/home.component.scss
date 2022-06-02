@@ -1,0 +1,219 @@
+// $color-white:#fff;
+// $button-background-color: #82a70c;
+// $font-family: 'Roboto', sans-serif;
+
+.main-content{
+    display:flex;
+    flex-direction: column;
+    background-color: #f7f7f7;
+    padding: 40px 0 10px;
+    // box-sizing: border-box;
+    }
+    
+        .header-content {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         width: 80%;
+         margin: 0 auto;
+         padding-bottom: 25px;
+        }
+         .emp-detail-text{
+            font: normal normal bold 24px/25px Roboto;
+            letter-spacing: 0px;
+            color: #42515f;
+             }
+     
+              .add-button {
+                font: normal normal normal 22px/29px Roboto;
+                letter-spacing: 0px;
+                color: #ffffff;
+                opacity: 1;
+                background: #82a70c 0% 0% no-repeat padding-box;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 18px;
+                outline: none;
+                cursor: pointer;
+                text-decoration: none;
+              }
+            
+    //     }   
+    
+    // }
+    
+    
+    
+    
+    $color-white:#fff;
+    $button-background-color: #82a70c;
+    $font-family: 'Roboto', sans-serif;
+    
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        background-color: #f7f7f7;
+        padding: 30px 0 10px;
+        box-sizing: border-box;
+    
+        .header-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
+            padding-bottom: 25px;
+    
+            .emp-detail-text {
+                font: normal normal bold 24px/25px $font-family;
+                letter-spacing: 0px;
+                color: #42515f;
+                opacity: 1;
+    
+                .emp-count {
+                    background-color: $button-background-color;
+                    color: $color-white;
+                    border-radius: 30%;
+                    padding: 2px 2px 0px 2px;
+                    margin-left: 10px;
+                    font-size: 16px;
+                    width: 26px;
+                    text-align: center;
+                    display: inline-block;
+                }
+            }
+    
+            .add-button {
+                font: normal normal normal 22px/29px $font-family;
+                letter-spacing: 0px;
+                color: $color-white;
+                opacity: 1;
+                background: $button-background-color 0% 0% no-repeat padding-box;
+                border: none;
+                border-radius: 5px;
+                padding: 5px 18px;
+                outline: none;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .submitButton {
+                border: 1px solid greenyellow;
+                background-color: greenyellow;
+                margin-right: 50px;
+              }
+        }
+    
+        .table-main {
+            width: 80%;
+            margin: 0 auto;
+            overflow: auto;
+            // word-spacing: 5px;
+        
+            .table {
+                width: 100%;
+                margin: 0 auto;
+                border-collapse: separate;
+                border-spacing: 0 0px;
+                min-width: 800px;
+        
+                td, th {
+                    text-align: center;
+                    padding: 5px 8px;
+                }
+
+                .reasonOverFlow{
+                    // background: #4CAF50;
+                    // color: e;
+                    // padding: 15px;
+                    // width: 50%;
+                    // height: 100px;
+                    overflow: scroll;
+                    // border: 1px solid #ccc;
+                }
+                
+                th {
+                    background: #424242 0% 0% no-repeat padding-box;
+                    text-align: left;
+                    font: normal normal mediun 18px/24px $font-family;
+                    letter-spacing: 0px;
+                    color: #FFFFFF;
+                    text-transform: uppercase;
+                    opacity: 1;
+                    border: 0px solid #dddddd;
+                    padding: 16px 0px;
+                }
+                
+                tr:not(:first-child) {
+                    background: #ffffff 0% 0% no-repeat padding-box;
+                    border: 1px solid #e3e3e3;
+                    border-radius: 3px;
+                }
+                
+                td {
+                    font: normal normal nornal 14px/21px $font-family;
+                    letter-spacing: 0px;
+                    color: #3d3d3d;
+                    opacity: 1;
+                }
+                
+                td:first-child {
+                    display: flex;
+                    align-items: center;
+                }
+                
+                td img :first-child {
+                    margin-right: 10px;
+                }
+                
+                td img {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .dot {
+        height: 20px;
+        width: 20px;
+        background-color: green;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+        .col-md-8 {
+            margin: 0;
+            left: 40%;
+            position: relative;
+          }
+
+          
+          .mat-raised-button{
+            padding: 0 6px 0 6px;
+            margin: 6px 8px 6px 8px;
+            min-width: 200px;
+            border-radius: 0;
+            font-size: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            text-decoration:none;
+            border: none;
+            outline: none;
+          }
+
+.active{
+    height: 20px;
+        width: 20px;
+        background-color: rgb(0,255,0);
+        border-radius: 50%;
+        display: inline-block;
+}
+
+.inactive{
+    height: 20px;
+        width: 20px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+}

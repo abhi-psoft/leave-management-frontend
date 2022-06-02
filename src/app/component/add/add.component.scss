@@ -1,0 +1,195 @@
+// *{
+//   box-sizing: border-box;
+// }
+
+// .form-content {
+//     height:100%;
+//     background-color: #f7f7f7;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+// .form {
+//     width: 55%;
+//     padding: 44px 60px;
+//     background: #ffffff;
+//     box-shadow: 0px 3px 6px #00000029;
+//     border: 1px solid #f5f5f5;
+//     border-radius: 15px;
+//     opacity: 1;
+// }
+// .form-head {
+//     font: normal normal bold 24px/37px Roboto;
+//     letter-spacing: 0px;
+//     color: #42515f;
+//     text-transform: capitalize;
+//     opacity: 1;
+//     padding-bottom: 20px;
+// }
+// .row-content {
+//     display: flex;
+//     flex-direction: row;
+//     margin-bottom: 15px;
+//     align-items: center;
+//     border: 0px  green;
+// }
+// .label {
+//     min-width: 140px;
+// }
+// label {
+//     padding: 12px 12px 12px 0;
+//     display: inline-block;
+// }
+// .text {
+//     font-size: 16px;
+//     color: #42515f;
+//     opacity: 1;
+//     font-family: Roboto;
+// }
+// .input{
+//     width: 100%;
+//     padding: 12px;
+//     border-radius: 4px;
+//     resize: vertical;
+// }
+
+// .main-card {
+//   max-width: 400px;
+//   width: 75%;
+//   margin: 10px auto;
+// }   
+// // .profile-radio-content {
+// //     display: flex;
+// //     flex-direction: row;
+// //   }
+// //   .profile-radio-content > label {
+// //     display: flex;
+// //     flex-direction: row;
+// //     align-items: center;
+// //   }
+// //   .profile {
+// //     width: 40px;
+// //     border-radius: 50%;
+// //     margin-left: 12px;
+// //   }    
+//   .select{
+//       padding: 12px;
+//       border: 1px solid rgb(214, 12, 12);
+//       border-radius: 4px;
+//       resize: vertical;
+//       font: normal normal normal 16px Roboto;
+//       letter-spacing: 0px;
+//       color: #42515f;
+//       background-color: transparent;
+//   }
+//   .buttonParent {
+//     display: flex;
+//     margin-bottom: 20px;
+//     justify-content: space-between;
+//     margin-top: 20px;
+//   }
+//    .button {
+//      font-size: 20px;
+//      font-family: Roboto;
+//      letter-spacing: 0px;
+//      color: #707070;
+//      opacity: 1;
+//      background: #f5f5f5;
+//      border: none;
+//      font-weight: 400;
+//      min-width: 140px;
+//      padding: 7px 7px;
+//      border: 1px solid #707070;
+//      cursor: pointer;
+//      border-radius: 5px;
+//   }
+//    .submitButton {
+//      border: 1px solid #969696;
+//      background-color: #f5f5f5;
+//      margin-right: 50px;
+//      margin-left: 50px;
+//    }
+  
+//    .cancelButton {
+//      border: 1px solid #969696;
+//      text-decoration: none;
+//      text-align: center;
+//      background-color: #f5f5f5;
+//    }
+//    .btn:active {
+//     box-shadow:7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+//     transform: translateY(4px);
+//     /* Moving button 4px to y-axis */
+//     .redText{
+//       color:red;}
+  
+// }
+
+// alternate
+
+.leave-form-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.button-flex-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.row-content{
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card{
+  width: 600px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.mat-radio-group{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.leave-day-types{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.datepicker{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.label-text{
+  margin-bottom: 15px;
+  background-image: linear-gradient(to right, #b39ddb , white);
+  padding: 1px 1px 1px 4px;
+}
+.mat-card-actions{
+  margin-top: 20px;
+}
+
+.button-panel{
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 2px 1px -1px rgb(22, 22, 22), 
+              0 1px 1px 0 rgba(22, 22, 22), 
+              0 1px 3px 0 rgba(22, 22, 22);
+}
+
+
+
+
+
+
+
+
