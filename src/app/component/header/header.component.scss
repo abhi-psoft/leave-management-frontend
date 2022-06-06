@@ -47,3 +47,38 @@
     border: none;
     outline: none;
 }
+
+//Responsive css for display size less than 1000px
+
+@media (max-width: 1000px) {
+  .left-navigation{
+    flex-direction:column;
+  }
+  .mat-toolbar{
+    height: fit-content;
+  }
+  .example-fill-remaining-space{
+    flex:0 0 auto;
+  }
+  .mat-toolbar{
+    display: flex;
+    flex-direction: column;
+  }
+  .button-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .mat-fab{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .title-1{
+    font-size: x-large;
+  }
+  .title-2{
+    font-size: small;
+  }
+}

@@ -151,3 +151,26 @@
   .list{
     margin-bottom: 0px;
   }
+
+  .mat-raised-button{
+    position:fixed;
+    width:100px;
+    height:100px;
+    bottom:40px;
+    right:40px;
+    background-color:#b39ddb;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+    margin: 0px 0px 0px 0px;
+    font-size: small;
+  }
+  
+  .my-float{
+    font-style: normal;   
+    
+  }
+
+  a { text-decoration: none; }
+

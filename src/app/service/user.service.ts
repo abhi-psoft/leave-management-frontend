@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SignInModel } from '../model/sign-in';
 import { ResponseEntity } from '../model/response';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private baseURL =  'http://localhost:9091';
+  private role: any=localStorage.getItem('role');
   constructor( private http: HttpClient) { }
 
 
@@ -64,5 +66,13 @@ export class UserService {
 
   getAllUsers(){
     return this.http.get<ResponseEntity>(this.baseURL + '/get-all-user');
+  }
+
+  getUserById(email: String){
+    return this.http.get<ResponseEntity>(this.baseURL + '/get-user/' + email);
+  }
+
+  getLoggedInUserRole(): Observable<string>{
+    return this.role.asObservable();
   }
 }

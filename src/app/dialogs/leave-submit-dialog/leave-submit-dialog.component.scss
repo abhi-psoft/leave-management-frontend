@@ -1,0 +1,18 @@
+.dialog{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mat-dialog-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: small;
+}
+
+.mat-button{
+    color: white;
+}
+

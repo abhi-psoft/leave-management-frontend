@@ -43,7 +43,10 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { CalendarComponent } from './component/calendar/calendar.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatRadioModule} from '@angular/material/radio';
-
+import { LeaveSubmitDialogComponent } from './dialogs/leave-submit-dialog/leave-submit-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatBadgeModule} from '@angular/material/badge';
+import { ManageLeavesComponent } from './component/manage-leaves/manage-leaves.component';
 @NgModule({
 
   declarations: [
@@ -55,7 +58,9 @@ import {MatRadioModule} from '@angular/material/radio';
     LoginComponent,
     SigninComponent,
     DashboardComponent,
-    CalendarComponent, 
+    CalendarComponent,
+    LeaveSubmitDialogComponent,
+    ManageLeavesComponent, 
   ],
   
   imports: [
@@ -83,7 +88,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatListModule,
     FullCalendarModule,
     MatSlideToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule,
+    MatBadgeModule
   ],
   exports: [MatFormFieldModule, MatInputModule],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },         

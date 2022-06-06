@@ -105,7 +105,7 @@
 </div>
  -->
 
-<mat-grid-list cols="5" rowHeight="2:1" md-gutter="100px" gutterSize="20px">
+<mat-grid-list [cols]="breakpoint" rowHeight="2:1" md-gutter="100px" gutterSize="20px" (window:resize)="onResize($event)">
   <mat-grid-tile rowspan="2" class="user-card">
     <div class="card-body">
       <div class="flip-card">
@@ -170,7 +170,6 @@
           <mat-grid-tile-header>
             <span class="title-footer"> Your Leaves</span>
           </mat-grid-tile-header>
-          <!-- <button mat-raised-button (click)="navigateToAllLeaves()"> -->
             <marquee behavior="scroll" direction="up">
           <div *ngFor="let leave of leaves" class="list">
             <mat-list>
@@ -183,9 +182,9 @@
             </mat-list>
           </div>
         </marquee>
-        <!-- </button> -->
         </div>
   </mat-grid-tile>
+
 
   <mat-grid-tile colspan="1" rowspan="2">
     <div class="card-body">
@@ -223,3 +222,15 @@
   </mat-grid-tile>
   <!-- <mat-grid-tile colspan="2">10</mat-grid-tile> -->
 </mat-grid-list>
+
+<!-- 
+<a routerLink="/manage-leaves" class="float" [matBadge]="leaveRequests" matBadgePosition="before" matBadgeColor="warn">
+  <span class="my-badge" ></span>
+  
+  </a> -->
+  <span *ngIf="currentUserRole!='User'">
+  <button mat-raised-button color="accent" matBadge="8" matBadgePosition="before" matBadgeColor="warn" 
+      routerLink="/manage-leaves">
+      <span class="my-float" >Requests</span>
+    </button>
+    </span>>

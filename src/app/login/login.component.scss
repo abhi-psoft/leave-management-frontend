@@ -73,3 +73,23 @@
      margin-bottom: 10px;
      font-size: 20px;
  }
+
+ @media (max-width: 1000px) {
+   .main-card{
+     width: fit-content;
+     height: fit-content;
+     margin: 10px 10px 10px 10px;    
+   }
+
+   .mat-card-actions{
+     display: flex;
+   }
+   .button{
+     margin-bottom: 0;
+   }
+   .mat-raised-button{
+     font-size: x-small;
+     padding-left: 20px;
+     padding-right: 20px;
+   }
+ }

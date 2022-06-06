@@ -75,7 +75,15 @@
  }
 
 
-
+ @media (max-width: 1000px) {
+   .main-card{
+    width: fit-content;
+    height: fit-content;
+   }
+   .mat-form-field{
+    min-width: 250px ;
+   }
+ }
  
 
    

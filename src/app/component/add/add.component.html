@@ -1,255 +1,276 @@
 <div class="leave-form-flex">
   <!-- <form   (ngSubmit)="onSubmit()" >   -->
-    <mat-card *ngIf="currentUserRole !== 'User'">
+  <mat-card>
+    <div class="title">
       <mat-card-title>
-        Leave Application for {{currentUserRole}}
+        Leave Application for {{ currentUserRole }}
       </mat-card-title>
-      <mat-card-content>
-        
-        <form [formGroup]="employeeForm">
-            <h5 class="text-danger">* All fields Mandatory</h5>
-        
+    </div>
+    <mat-card-content>
+      <form [formGroup]="employeeForm">
+        <!-- <h5 class="text-danger">* All fields Mandatory</h5> -->
+        <!-- User Content Div -->
+        <div class="content-container">
+          <div class="user-content">
+            <div class="title">
+              <mat-card-title>
+                Employee Details
+              </mat-card-title>
+            </div>
             <!-- Name -->
             <div class="row-content">
               <label class="label-text" for="name">
-                  Full Name <span style="color: red"> *</span>
-                </label>
-        
-              <mat-form-field appearance="fill" >
-                <mat-label>Users</mat-label>
-                <mat-select required formControlName="name" [(ngModel)]="employee.name">
-                  <mat-option>--</mat-option>
+                <i class="fa fa-user"></i>
+                Full Name <span style="color: red"> *</span>
+              </label>
+
+              <!-- For user Admin and Manager -->
+              <mat-form-field appearance="fill" *ngIf="currentUserRole !== 'User'">
+                <mat-label>Select Employee</mat-label>
+                <mat-select required formControlName="name" (selectionChange)="setFormEmail($event)"
+                  [(ngModel)]="employee.name">
+                  <mat-option>-Select Employee-</mat-option>
                   <mat-option *ngFor="let user of users" [value]="user.fullName">
-                    {{user.fullName}}
+                    {{ user.fullName }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
-  
+
+              <!-- For Regular User -->
+
+              <mat-form-field appearance="fill" *ngIf="currentUserRole === 'User'">
+                <mat-label>Select Employee</mat-label>
+                <mat-select required formControlName="name" (selectionChange)="setFormEmail($event)"
+                  [(ngModel)]="employee.name">
+                  <mat-option [value]="currentUser.fullName">
+                    {{ currentUser.fullName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-        
+
             <!-- Email Address -->
             <div class="row-content">
-              <label class="label-text" for="emailAddress" style="margin-left: 0px"
-                >Email <span style="color: red">*</span>
+              <label class="label-text" for="emailAddress" style="margin-left: 0px">
+                <i class="fa fa-envelope"></i>Email <span
+                  style="color: red">*</span>
               </label>
-        
-        
-                <mat-form-field appearance="fill" style="width: 100%;">
-                  <mat-label>Enter your email</mat-label>
-                  <input matInput placeholder="abc@example.com"
-                  name="emailAddress" matInput formControlName="emailAddress" required [(ngModel)]="employee.emailAddress">
-                </mat-form-field>
-            </div>
-        
-            <!-- Leave Type -->
-            <div class="row-content">
-              <label
-                class="label-text"
-                for="leaveType"
-                required
-                ><span style="color: red"> <small></small></span>Leave Type <span style="color: red">*</span> </label
-              >
-              
-              <div class="leave-types">
-                <mat-radio-group aria-label="Select an option" formControlName="leaveType" [(ngModel)]="employee.leaveType">
-                    <mat-radio-button value="vacation">Vacation</mat-radio-button>
-                    <mat-radio-button value="medical">Medical</mat-radio-button>
-                    <mat-radio-button value="business">Business Tour</mat-radio-button>
-                    <mat-radio-button value="personal">Personal</mat-radio-button>
-                  </mat-radio-group>
-              </div>
-            </div>
-        
-            <div class="row-content" style="margin-top: 20px;">
-              <label for="startDate" class="label-text"
-                >Select Date <span style="color: red"> * </span></label
-              >
-              <div class="leave-day-types">
-                <mat-slide-toggle [(ngModel)]="isBackDated" [ngModelOptions]="{standalone: true}" name="back" (change)="backDateToggle()">Back Dated</mat-slide-toggle>
-                <mat-slide-toggle [(ngModel)]="isHalfDay" [ngModelOptions]="{standalone: true}" name="half">Half day</mat-slide-toggle>
-              </div>
-            </div>
 
-            <div class="row-content" style="margin-top: 20px;">
-                <div class="datepicker" *ngIf="!isHalfDay">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Select a date or date range</mat-label>
-                        <mat-date-range-input [formGroup]="employeeForm" [rangePicker]="picker" [min]="minDate" [max]="maxDate">
-                          <input matStartDate formControlName="leaveStartDate"  [(ngModel)]="employee.leaveStartDate" placeholder="Start date">
-                          <input matEndDate formControlName="leaveEndDate" [(ngModel)]="employee.leaveEndDate" placeholder="End date">
-                        </mat-date-range-input>
-                        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #picker></mat-date-range-picker>
-                      </mat-form-field>
-                </div>
-                <div class="datepicker"  *ngIf="isHalfDay">
-                  <mat-form-field appearance="fill">
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [formGroup]="employeeForm" [matDatepicker]="picker" formControlName="leaveStartDate"  [(ngModel)]="employee.leaveStartDate" [min]="minDate" [max]="maxDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-            </div>
-        
-           
-        
-            <!-- Notes -->
-            <!-- <div class="row-content">
-              <label for="emailAddress " style="color: red">*</label>
-              <label class="label-text" for="notes" style="margin-left: -5px"
-                ><span style="color: red"> <small></small></span>Reason</label
-              >
-              <textarea
-                class="input"
-                name="Notes"
-                id="notes"
-                placeholder=""
-                style="height: 100px"
-                style="margin-left: 8px"
-              ></textarea>
-            </div> -->
-        
-            <!-- Submit, Cancel, Reset Buttons -->
-                <div class="button-panel">
-                    <mat-card-actions>
-                        <div class="button-flex-container">
-                          <button mat-raised-button color="primary" (click)="goBack()">Cancle</button>
-                          <button mat-raised-button color="primary" (click)="clearForm()">Reset</button>
-                          <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
-                        </div>
-                      </mat-card-actions>
-                </div>
-            </form>
-  
-      </mat-card-content>
-     
-    </mat-card>
-  
-
-
-  <!-- for user User -->
-  <mat-card *ngIf="currentUserRole == 'User'">
-    <mat-card-title>
-      Leave Application for User
-    </mat-card-title>
-    <mat-card-content>
-      
-      <form>
-          <h5 class="text-danger">* All fields Mandatory</h5>
-      
-          <!-- Name -->
-          <div class="row-content">
-            <label class="label-text" for="name">
-                Full Name <span style="color: red"> *</span>
-              </label>
-      
-            <mat-form-field appearance="fill" >
-              <mat-label>Users</mat-label>
-              <mat-select>
-                <mat-option>--</mat-option>
-                <mat-option>
-                  Options
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-      
-
-          </div>
-      
-          <!-- Email Address -->
-          <div class="row-content">
-            <label class="label-text" for="emailAddress" style="margin-left: 0px"
-              >Email <span style="color: red">*</span>
-            </label>
-      
-      
-              <mat-form-field appearance="fill" style="width: 100%;">
-                <mat-label>Enter your email</mat-label>
-                <input matInput placeholder="abc@example.com"
-                name="emailAddress" value="abc@gmail.com">
+              <mat-form-field appearance="fill" style="width: 100%">
+                <mat-label>Email Id</mat-label>
+                <input required matInput placeholder="abc@example.com" name="emailAddress" matInput
+                  formControlName="emailAddress" required [(ngModel)]="employee.emailAddress" />
               </mat-form-field>
-          </div>
-      
-          <!-- Leave Type -->
-          <div class="row-content">
-            <label
-              class="label-text"
-              for="leaveType"
-              required
-              ><span style="color: red"> <small></small></span>Leave Type <span style="color: red">*</span> </label
-            >
-            <div class="leave-types">
-              <mat-radio-group aria-label="Select an option">
-                  <mat-radio-button value="1">Vacation</mat-radio-button>
-                  <mat-radio-button value="2">Medical</mat-radio-button>
-                  <mat-radio-button value="3">Business Tour</mat-radio-button>
-                  <mat-radio-button value="4">Personal</mat-radio-button>
-                </mat-radio-group>
             </div>
           </div>
-      
-          <div class="row-content" style="margin-top: 20px;">
-            <label for="startDate" class="label-text"
-              >Select Date <span style="color: red"> * </span></label
-            >
-            <div class="leave-day-types">
-              <mat-slide-toggle>Back Dated</mat-slide-toggle>
-              <mat-slide-toggle>Half day</mat-slide-toggle>
+          <!-- User Content Div Ends-->
+          <mat-divider [vertical]="true"></mat-divider>
+          <!-- Leave Details div -->
+          <div class="leave-details">
+            <div class="title">
+              <mat-card-title>
+                Leave Details
+              </mat-card-title>
             </div>
-          </div>
-          <div class="row-content" style="margin-top: 20px;">
-              <div class="datepicker">
-                  <mat-form-field appearance="fill">
-                      <mat-label>Select a date or date range</mat-label>
-                      <mat-date-range-input [formGroup]="employeeForm" [rangePicker]="picker">
-                        <input matStartDate formControlName="start" placeholder="Start date">
-                        <input matEndDate formControlName="end" placeholder="End date">
-                      </mat-date-range-input>
-                      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-date-range-picker #picker></mat-date-range-picker>
-                    </mat-form-field>
-              </div>
-              <!-- <p>Selected range: {{range.value | json}}</p> -->
-          </div>
-      
-         
-      
-          <!-- Notes -->
-          <!-- <div class="row-content">
-            <label for="emailAddress " style="color: red">*</label>
-            <label class="label-text" for="notes" style="margin-left: -5px"
-              ><span style="color: red"> <small></small></span>Reason</label
-            >
-            <textarea
-              class="input"
-              name="Notes"
-              id="notes"
-              placeholder=""
-              style="height: 100px"
-              style="margin-left: 8px"
-            ></textarea>
-          </div> -->
-      
-          <!-- Submit, Cancel, Reset Buttons -->
-              <div class="button-panel">
-                  <mat-card-actions>
-                      <div class="button-flex-container">
-                        <button mat-raised-button color="primary">Cancle</button>
-                        <button mat-raised-button color="primary">Reset</button>
-                        <button mat-raised-button color="primary" type="submit">Submit</button>
-                      </div>
-                    </mat-card-actions>
-              </div>
-          </form>
+            <!-- Leave Type -->
+            <div class="row-content" style="margin-bottom: 80px;">
+              <label class="label-text" for="leaveType"><i class="fa fa-anchor"></i>Leave Type
+                <span style="color: red">*</span>
+              </label>
 
+              <div class="leave-types">
+                <mat-radio-group required formControlName="leaveType" aria-label="Select an option"
+                  [(ngModel)]="employee.leaveType">
+                  <mat-radio-button value="vacation">Vacation</mat-radio-button>
+                  <mat-radio-button value="medical">Medical</mat-radio-button>
+                  <mat-radio-button value="business">Business Tour</mat-radio-button>
+                  <mat-radio-button value="personal">Personal</mat-radio-button>
+                </mat-radio-group>
+
+                <div class="row-content" style="margin-top: 20px">
+                  <div class="leave-day-types">
+                    <mat-slide-toggle [(ngModel)]="isBackDated" [ngModelOptions]="{ standalone: true }" name="back"
+                      (change)="backDateToggle()">Back Dated</mat-slide-toggle>
+                    <mat-slide-toggle [(ngModel)]="isHalfDay" [ngModelOptions]="{ standalone: true }" name="half">Half day
+                    </mat-slide-toggle>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="row-content" style="margin-top: 20px">
+              <label for="startDate" class="label-text">
+                <i class="fa fa-calendar"></i>Select Date <span style="color: red"> * </span></label>
+              <div class="leave-day-types">
+                <mat-slide-toggle [(ngModel)]="isBackDated" [ngModelOptions]="{ standalone: true }" name="back"
+                  (change)="backDateToggle()">Back Dated</mat-slide-toggle>
+                <mat-slide-toggle [(ngModel)]="isHalfDay" [ngModelOptions]="{ standalone: true }" name="half">Half day
+                </mat-slide-toggle>
+              </div>
+            </div> -->
+
+            <div class="row-content">
+              <label for="startDate" class="label-text" style="margin-top: -45px;">
+                <i class="fa fa-calendar"></i>Select Date <span style="color: red"> * </span></label>
+              <div class="datepicker" *ngIf="!isHalfDay">
+                <mat-form-field appearance="fill">
+                  <mat-label>Select a date or date range</mat-label>
+                  <mat-date-range-input [formGroup]="employeeForm" [rangePicker]="picker" [min]="minDate"
+                    [max]="maxDate">
+                    <input required matStartDate formControlName="leaveStartDate" [(ngModel)]="employee.leaveStartDate"
+                      placeholder="Start date" />
+                    <input matEndDate formControlName="leaveEndDate" [(ngModel)]="employee.leaveEndDate"
+                      placeholder="End date" />
+                  </mat-date-range-input>
+                  <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+              <div class="datepicker" *ngIf="isHalfDay">
+                <mat-form-field appearance="fill">
+                  <mat-label>Choose a date</mat-label>
+                  <input required matInput [formGroup]="employeeForm" [matDatepicker]="picker"
+                    formControlName="leaveStartDate" [(ngModel)]="employee.leaveStartDate" [min]="minDate"
+                    [max]="maxDate" />
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- Leave Details div ends -->
+        </div>
+        <div class="button-panel">
+          <mat-card-actions>
+            <div class="button-flex-container">
+              <button mat-raised-button color="primary" (click)="goBack()" style="background-color: #c42625;">
+                Cancle
+              </button>
+              <button mat-raised-button color="primary" (click)="clearForm()" style="background-color: #ed9720;">
+                Reset
+              </button>
+              <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" style="background-color: #53af50;">
+                Submit 
+              </button>
+            </div>
+          </mat-card-actions>
+        </div>
+      </form>
     </mat-card-content>
-   
   </mat-card>
 
-</div>
+  <!-- <mat-card *ngIf="currentUserRole === 'User'">
+    <mat-card-title>
+      Leave Application for {{currentUserRole}}
+    </mat-card-title>
+    <mat-card-content>
 
+      <form [formGroup]="employeeForm">
+        <h5 class="text-danger">* All fields Mandatory</h5>
+
+ 
+        <div class="row-content">
+          <label class="label-text" for="name">
+            Full Name <span style="color: red"> *</span>
+          </label>
+
+          <mat-form-field appearance="fill">
+            <mat-label>User</mat-label>
+            <mat-select required formControlName="name" (selectionChange)="setFormEmail($event)"
+              [(ngModel)]="employee.name">
+
+              <mat-option [value]="currentUser.fullName">
+                {{currentUser.fullName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        </div>
+
+
+        <div class="row-content">
+          <label class="label-text" for="emailAddress" style="margin-left: 0px">Email <span style="color: red">*</span>
+          </label>
+
+
+          <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Enter your email</mat-label>
+            <input required matInput placeholder="abc@example.com" name="emailAddress" required
+              [(ngModel)]="employee.emailAddress" formControlName="emailAddress">
+          </mat-form-field>
+        </div>
+
+   
+        <div class="row-content">
+          <label class="label-text" for="leaveType"><span style="color: red"> <small></small></span>Leave Type <span
+              style="color: red">*</span> </label>
+
+          <div class="leave-types">
+            <mat-radio-group required aria-label="Select an option" formControlName="leaveType"
+              [(ngModel)]="employee.leaveType">
+              <mat-radio-button value="vacation">Vacation</mat-radio-button>
+              <mat-radio-button value="medical">Medical</mat-radio-button>
+              <mat-radio-button value="business">Business Tour</mat-radio-button>
+              <mat-radio-button value="personal">Personal</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div class="row-content" style="margin-top: 20px;">
+          <label for="startDate" class="label-text">Select Date <span style="color: red"> * </span></label>
+          <div class="leave-day-types">
+            <mat-slide-toggle [(ngModel)]="isBackDated" [ngModelOptions]="{standalone: true}" name="back"
+              (change)="backDateToggle()">Back Dated</mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="isHalfDay" [ngModelOptions]="{standalone: true}" name="half">Half day
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="row-content" style="margin-top: 20px;">
+          <div class="datepicker" *ngIf="!isHalfDay">
+            <mat-form-field appearance="fill">
+              <mat-label>Select a date or date range</mat-label>
+              <mat-date-range-input [formGroup]="employeeForm" [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+                <input required matStartDate formControlName="leaveStartDate" [(ngModel)]="employee.leaveStartDate"
+                  placeholder="Start date">
+                <input required matEndDate formControlName="leaveEndDate" [(ngModel)]="employee.leaveEndDate"
+                  placeholder="End date">
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          <div class="datepicker" *ngIf="isHalfDay">
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input required matInput [formGroup]="employeeForm" [matDatepicker]="picker"
+                formControlName="leaveStartDate" [(ngModel)]="employee.leaveStartDate" [min]="minDate" [max]="maxDate">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+        <div class="button-panel">
+          <mat-card-actions>
+            <div class="button-flex-container">
+              <button mat-raised-button color="primary" (click)="goBack()">Cancle</button>
+              <button mat-raised-button color="primary" (click)="clearForm()">Reset</button>
+              <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+            </div>
+          </mat-card-actions>
+        </div>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card> -->
+</div>

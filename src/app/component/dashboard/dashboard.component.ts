@@ -17,9 +17,11 @@ export class DashboardComponent implements OnInit {
   leaves: Leave[] = leaves;
   currentDate: Date = new Date();
   username: string = 'Abhishek Suryawanshi';
-  employees!: Employee[];
+  employees!: Employee[] ;
   leavesNum: any = (this.usedLeaves/this.totalLeaves)*100;
-
+  breakpoint!: number;
+  leaveRequests: number = 9;
+  currentUserRole!: string;
   
   constructor(
     public headerService: HeaderService,
@@ -28,12 +30,16 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    this.breakpoint = (window.innerWidth <= 1000) ? 2 : 5;
     this.headerService.showHeader();
     this.getEmployees();
+    this.currentUserRole = localStorage.getItem('role')!;
   }
 
- 
+  onResize(event: any) {
+    console.log("window change ", event.target.innerWidth)
+    this.breakpoint = (event.target.innerWidth <= 1000) ? 2 : 5;
+  }
 
   navigateToAllLeaves() {
     this.routerlink.navigate(['/home']);
@@ -46,7 +52,6 @@ export class DashboardComponent implements OnInit {
   private getEmployees() {
     this.employeeService.getAllEmployee().subscribe((data) => {
       this.employees = data;
-      console.log(this.employees)
     });
   }
 
@@ -74,10 +79,8 @@ export class DashboardComponent implements OnInit {
     let startDate = new Date(start);
     let endDate = new Date(end);
     if (this.currentDate > startDate && this.currentDate < endDate) {
-      console.log(' date is between the 2 dates');
       return true
     } else {
-      console.log('date is not in the range');
       return false
     }
   }

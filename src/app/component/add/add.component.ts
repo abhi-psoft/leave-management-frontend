@@ -11,9 +11,10 @@ import { UserService } from 'src/app/service/user.service';
 import { ResponseEntity } from 'src/app/model/response';
 import { User } from 'src/app/model/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { tr } from 'date-fns/locale';
+import { el, tr } from 'date-fns/locale';
 import { Location } from '@angular/common';
-
+import { MatDialog } from '@angular/material/dialog';
+import { LeaveSubmitDialogComponent } from 'src/app/dialogs/leave-submit-dialog/leave-submit-dialog.component';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -27,7 +28,7 @@ export class AddComponent implements OnInit {
   // testSubscription: Subscription;
 
   public employeeForm!: FormGroup;
-
+  public currentUser!: User;
   public users!: User[];
   public disableSelect: boolean = true;
   minDateToFinish = new Subject<string>();
@@ -49,7 +50,8 @@ export class AddComponent implements OnInit {
     private employeeService: EmployeeService,
     private router: Router,
     private location: Location,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) {
     //  this.minDateToFinish.subscribe(r => {
     // this.minDate = new Date(r);
@@ -59,7 +61,7 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDay() + 100);
     this.minDate.setDate(this.minDate.getDay() - 2);
-
+    this.getUserById();
     this.getUserRole();
     this.getUsers();
     this.employeeForm = this.fb.group(
@@ -67,9 +69,9 @@ export class AddComponent implements OnInit {
         name: ['', Validators.required],
         leaveType: ['', Validators.required],
         leaveStartDate: ['', Validators.required],
-        leaveEndDate: ['', Validators.required],
-        notes: ['', Validators.required],
-        emailAddress: ['', Validators.required],
+        leaveEndDate: [''],
+        notes: [''],
+        emailAddress: [{ value: '', disabled: true }, Validators.required, Validators.email],
       },
       { validator: this.checkDates }
     );
@@ -129,18 +131,26 @@ export class AddComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.employee);
-    console.log('Added Data');
-    this.saveEmployee();
+    if (this.employeeForm.valid) {
+      const dialogRef = this.dialog.open(LeaveSubmitDialogComponent, {
+  //      width: '600px',
+        data: this.employee,
+      });
 
-    //  window.alert("Employee Leave Details added Successfully!");
-    this.toastr.success('Leave Added!', 'Success!');
-    //  this.employeeService.getAllEmployee
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed ', result);
+        if (result) {
+          console.log('True returned');
+          this.saveEmployee();
+          this.toastr.success('Leave Added!', 'Success!');
+        }
+      });
+    }
+    else{
+      this.toastr.error("Please Enter Required Details!")
+    }
 
-    this.employeeService.getAllEmployee();
-    // window.location.reload();
-
-    // this.employeeForm.reset();
+    //this.employeeService.getAllEmployee();
   }
 
   clearForm() {
@@ -180,11 +190,6 @@ export class AddComponent implements OnInit {
     this.goBack();
   }
 
-  buttonClick() {
-    console.log('button click');
-    // this.snack.open('Form submitted succesfully', 'Cancel');
-  }
-
   getUsers() {
     this.userService.getAllUsers().subscribe((data: ResponseEntity) => {
       console.log(data);
@@ -194,13 +199,6 @@ export class AddComponent implements OnInit {
   }
 
   getUserRole() {
-    // const token = localStorage.getItem('token');
-    // const obj = JSON.parse(atob(token!.split('.')[1]))
-
-    // this.userService.getUserRole(obj.sub).subscribe((res: ResponseEntity)=>{
-    //   console.log("Role is: ", res.data);
-    //   localStorage.setItem('role', res.data)
-    // })
     this.currentUserRole = localStorage.getItem('role')!;
     console.log(this.currentUserRole);
   }
@@ -208,5 +206,23 @@ export class AddComponent implements OnInit {
   dateTest() {
     console.log('Startdate: ', this.employee.leaveStartDate);
     console.log('Enddate: ', this.employee.leaveEndDate);
+  }
+
+  getUserById() {
+    let email = localStorage.getItem('email');
+    console.log(email);
+    this.userService.getUserById(email!).subscribe((data: ResponseEntity) => {
+      console.log(data.data);
+      this.currentUser = data.data;
+      console.log('Current User', this.currentUser);
+    });
+  }
+
+  setFormEmail(event: any) {
+    let user = this.users.find((obj) => {
+      return obj.fullName === event.value;
+    });
+    console.log('Selected ', user);
+    this.employee.emailAddress = user!.emailId;
   }
 }
