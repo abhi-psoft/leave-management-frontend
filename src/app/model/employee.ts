@@ -1,24 +1,11 @@
 export class Employee {
   id!: number;
-  name!: string;
-  leaveType!: string;
-  notes!: string;
-  leaveStartDate!: string;
-  leaveEndDate!: string;
-  emailAddress!:string;
-  status:boolean=false;
+  leave_start_date!: string;
+  leave_end_date!: string;
+  reason!: string;
+  type!: string;
+  status!: string;
+  applied_by!: string;
+  paid_unpaid!: string;
   
-
-
-  constructor(
-    _id: number,
-    _name: string,
-    _leaveStartDate: string,
-    _leaveEndDate: string,
-    _leaveType: string,
-    _notes: string,
-    _emailAddress:string,
-    _status: boolean,
- ) { }
 }
-

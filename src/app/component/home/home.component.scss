@@ -53,7 +53,7 @@
     .main-content {
         display: flex;
         flex-direction: column;
-        background-color: #f7f7f7;
+        background-color: #ffffff;
         padding: 30px 0 10px;
         box-sizing: border-box;
     
@@ -202,18 +202,20 @@
             outline: none;
           }
 
-.active{
-    height: 20px;
-        width: 20px;
-        background-color: rgb(0,255,0);
-        border-radius: 50%;
-        display: inline-block;
+._active{
+
+     color: green;
 }
 
 .inactive{
-    height: 20px;
-        width: 20px;
-        background-color: red;
-        border-radius: 50%;
-        display: inline-block;
+
+     color: red;
+}
+.pending{
+    color: blue;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
 }

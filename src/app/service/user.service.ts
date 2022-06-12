@@ -65,7 +65,7 @@ export class UserService {
   }
 
   getAllUsers(){
-    return this.http.get<ResponseEntity>(this.baseURL + '/get-all-user');
+    return this.http.get<any>(this.baseURL + '/get-all-user');
   }
 
   getUserById(email: String){

@@ -129,8 +129,10 @@
           <div class="flip-card-back">
             <div class="card-body">
               <span style="font-size: 20px;">{{username}}</span>
-              <p style="margin-top: 20px;">DOJ: May,16,2022</p>
-             <p>Software Engineer</p>
+              <span  style="margin-top: 20px;">Joined On:</span>
+              <p style="margin-top: 5px;">{{doj | date: "fullDate" }}</p>
+              <span style="margin-top: 5px;">Working as:</span>
+             <p>{{designation}}</p>
             </div>
           </div>
         </div>
@@ -165,18 +167,20 @@
     </div>
   </mat-grid-tile>
 
-  <mat-grid-tile colspan="2" rowspan="2">
-        <div class="card-body">
+  <mat-grid-tile colspan="2" rowspan="2"> 
+    <div class="card-body">
           <mat-grid-tile-header>
             <span class="title-footer"> Your Leaves</span>
           </mat-grid-tile-header>
             <marquee behavior="scroll" direction="up">
-          <div *ngFor="let leave of leaves" class="list">
+          <div *ngFor="let leave of leaveData" class="list">
             <mat-list>
-              <mat-list-item *ngIf="isDateGreater(leave.leaveStartDate, currentDate)">
+              <mat-list-item *ngIf="isDateGreater(leave.leave_start_date, currentDate)">
+                <button mat-button (click)="navigateToAllLeaves()">
                 <i class="fa fa-plane" style="margin-right: 15px"></i>
-                {{ leave.leaveStartDate | date: "dd/MM/yyyy" }}
-                &nbsp; &nbsp; &nbsp; Leave is {{ leave.status == true ? "Not Approved" : "Approved" }}
+               {{ leave.leave_start_date | date: "fullDate" }} 
+                &nbsp; &nbsp; &nbsp; Leave is {{ leave.status }}
+              </button>
                 <mat-divider></mat-divider>
             </mat-list-item>
             </mat-list>
@@ -192,10 +196,10 @@
         <span class="title-footer"> Who's Not Today!</span>
       </mat-grid-tile-header>
       <marquee behavior="scroll" direction="up">
-      <div *ngFor="let employee of employees" class="list">
+      <div *ngFor="let employee of allLeavesData" class="list">
         <mat-list>
-          <mat-list-item *ngIf="isDateBetween(employee.leaveStartDate, employee.leaveEndDate)">
-              {{ employee.name }} is on leave today!
+          <mat-list-item *ngIf="isDateBetween(employee.leave_start_date, employee.leave_end_date)">
+              {{ employee.idleave_transactions }} is on leave today!
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
@@ -229,7 +233,7 @@
   
   </a> -->
   <span *ngIf="currentUserRole!='User'">
-  <button mat-raised-button color="accent" matBadge="8" matBadgePosition="before" matBadgeColor="warn" 
+  <button mat-raised-button color="accent" [matBadge]="request_count" matBadgePosition="before" matBadgeColor="warn" 
       routerLink="/manage-leaves">
       <span class="my-float" >Requests</span>
     </button>

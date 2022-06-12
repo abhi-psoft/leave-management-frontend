@@ -1,7 +1,12 @@
 export interface SignInModel {
-
-    fullName: string,
-    emailId: string,
+    employee_id: string,
+    full_name: string,
+    email_id: string,
+    phone_no: number,
     password: string,
-    phoneNumber: number
+    leaves_taken: Number,
+    role: string
+    designation: string,
+    leaves_allowed: number,
+    doj: string
 }

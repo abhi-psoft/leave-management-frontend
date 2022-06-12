@@ -1,1 +1,42 @@
-<p>manage-leaves works!</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Leave Requests</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    <div class="all-data" id="content" #content>
+
+        <table >
+            <tr>
+                <th> Employee Id </th>
+                <th> Name </th>
+                <th> Leave Date </th>
+                <th> Leave End Date </th>
+                <th> Reason </th>
+                <th> Type </th>
+                <th>Approve | Reject</th>
+            </tr>
+            <tr *ngFor="let data of leaveEmpData">
+                <ng-container *ngIf="data.status === 'Pending'">
+                <td>{{data.employee_id}}</td>
+                <td>{{data.full_name}}</td>
+                <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
+                <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
+                <td>{{data.reason}}</td>
+                <td>{{data.type}}</td>
+                <td class="button-container">
+                    <button mat-raised-button (click)="approveLeave(data)">Approve</button>
+                    <button mat-raised-button (click)="rejectLeave(data.id)">Reject</button>
+                </td>
+                </ng-container>
+            </tr>
+        </table>
+        
+      </div>
+</div>

@@ -2,15 +2,15 @@
      <h1 mat-dialog-title>Application Summary</h1>
      <mat-divider></mat-divider>
     <mat-dialog-content style="margin-top: 20px;">
-        <span>Employee Name: {{data.name}}</span><br>
-        <span>Employee Email: {{data.emailAddress}}</span><br>
-        <span>Leave Type: {{data.leaveType}}</span><br>
-        <span>Leave Date: {{data.leaveStartDate | date: "fullDate"}}</span><br>
-        <span>End Date: {{data.leaveEndDate | date: "fullDate"}}</span><br>
+        <!-- <span>Employee Name: {{data.name}}</span><br>
+        <span>Employee Email: {{data.emailAddress}}</span><br> -->
+        <span>Leave Type: {{data.reason}}</span><br>
+        <span>Leave Date: {{data.leave_start_date | date: "fullDate"}}</span><br>
+        <span>End Date: {{data.leave_end_date | date: "fullDate"}}</span><br>
     </mat-dialog-content>
     <mat-dialog-actions>
         <button mat-button (click)="onNoClick()" style="background-color: #4527a0;"><span class="cancle"> Cancle </span></button>
-        <button mat-button [mat-dialog-close]="data.emailAddress" cdkFocusInitial style="background-color: #53af50;"><span class="yes"> Submit! </span></button>
+        <button mat-button [mat-dialog-close]="data.reason" cdkFocusInitial style="background-color: #53af50;"><span class="yes"> Submit! </span></button>
     </mat-dialog-actions>
 </div>
  

@@ -4,27 +4,33 @@
   <div class="left-navigation">
     <div class="title-main">
      <div class="title-1">
-       <span>Leave Management System</span>
+       <img src=".\assets\images\psoft_logo.png" style="width: 100px;">
+       <!-- <span>Leave Management System</span> -->
       </div>
      <div class="title-2">
-       <span>Prismatic Softwares Pvt. Ltd.</span>
+       <!-- <span>Prismatic Softwares Pvt. Ltd.</span> -->
+       <span>Leave Management System</span>
       </div>
    </div>
-  <div *ngIf="headerService.visible" class="navigation-links">
-    <div class="button-container">
-      <button mat-fab color="accent" aria-label="Example icon button with a home icon" (click)="navigateToDashboard()">
-        <mat-icon>home</mat-icon>
-      </button>
-      <button mat-raised-button color="accent">Profile</button>
-      <button mat-raised-button color="accent">Calendar</button>
-      <button mat-raised-button color="accent">Reports</button>
-    </div>
-  </div>
+
 </div>
   <!-- This fills the remaining space of the current row -->
   <span class="example-fill-remaining-space"></span>
 
-  <button mat-raised-button (click)="logout()" color="accent">Logout</button>
+  <div *ngIf="headerService.visible" class="navigation-links">
+    <div class="button-container">
+      <button mat-fab color="accent" style="margin-right: 5px;" aria-label="Example icon button with a home icon" (click)="navigateToDashboard()">
+        <mat-icon>home</mat-icon>
+      </button>
+      <button mat-stroked-button routerLink="/profile">Profile</button>
+      <button mat-stroked-button routerLink="/reports">Reports</button>
+    </div>
+  </div>
+ 
+  <button  (click)="logout()" 
+  mat-stroked-button matBadgePosition="before" >
+       Logout
+  </button>
 </mat-toolbar>
 
 <!--

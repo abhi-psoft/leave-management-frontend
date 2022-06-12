@@ -4,21 +4,23 @@ table {
     width: 100%;
   }
   .all-data{
-      margin-top: 0px;
+      margin-top: 30px;
   }
   td, th {
     border: 1px solid #dddddd;
     text-align: center;
     padding: 8px;
   }
+
   th {
     background-color: #4527a0;
     color: white;
   }
   tr:hover {background-color: rgb(202, 185, 233);}
-//   tr:nth-child(even) {
-//     background-color: #dddddd;
-//   }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
 .container{
     width:auto ;
     margin-left: auto;
@@ -49,12 +51,18 @@ table {
     font-size: larger;;
 }
 
-.button-container{
-    display: flex;
-    justify-content: space-evenly;
+._active{
+
+    color: green;
 }
 
+.inactive{
 
+    color: red;
+}
+.pending{
+   color: blue;
+}
 
 
 

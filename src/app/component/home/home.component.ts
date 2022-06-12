@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
 import { ToastrService } from 'ngx-toastr';
+import { LeaveData } from 'src/app/model/leave-data';
+import {jsPDF} from 'jspdf';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,7 @@ export class HomeComponent implements OnInit {
   employees: Employee[] = [];
   name: any;
   test:boolean=false;
+  leaveData!: LeaveData;
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -25,6 +28,7 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.getEmployees();
     }, 3000);
+    this.getLeavesByEmployee();
   }
 
   private getEmployees() {
@@ -96,5 +100,15 @@ export class HomeComponent implements OnInit {
       return false;
     }
   }
+
+  getLeavesByEmployee(){
+    this.employeeService.getLeavesByEmployee(localStorage.getItem('email')!).subscribe((data: any)=>{
+      this.leaveData = data;
+      console.log("Leaves for current",this.leaveData);
+    });
+  }
+
+
+ 
 
 }

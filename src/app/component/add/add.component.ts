@@ -23,13 +23,13 @@ import { LeaveSubmitDialogComponent } from 'src/app/dialogs/leave-submit-dialog/
 export class AddComponent implements OnInit {
   public currentUserRole!: string;
 
-  employee: Employee = new Employee(0, '', '', '', '', '', '', false);
+  employee: Employee = new Employee();
   leaveTypes = ['Medical', 'Vacation', 'Business Tour', 'Other', 'Back Dated'];
   // testSubscription: Subscription;
 
   public employeeForm!: FormGroup;
-  public currentUser!: User;
-  public users!: User[];
+  public currentUser!: any;
+  public users!: any[];
   public disableSelect: boolean = true;
   minDateToFinish = new Subject<string>();
 
@@ -38,6 +38,8 @@ export class AddComponent implements OnInit {
 
   public maxDate: Date = new Date();
   public minDate: Date = new Date();
+  selectedUserMailAddress: any;
+  selectedUserName: any;
 
   // dateChange(e: { value: { toString: () => string; }; }) {
   //   this.minDateToFinish.next(e.value.toString());
@@ -79,19 +81,19 @@ export class AddComponent implements OnInit {
     this.employeeForm.setValue({
       //  date: formatDate(new Date(), 'dd/mm/yyyy', 'en-US'),
       leaveStartDate: formatDate(
-        this.employee.leaveStartDate,
+        this.employee.leave_start_date,
         'yyyy-MM-dd',
         'en-US'
       ),
       leaveEndDate: formatDate(
-        this.employee.leaveEndDate,
+        this.employee.leave_end_date,
         'yyyy-MM-dd',
         'en-US'
       ),
     });
     if (this.currentUserRole == 'User') {
-      this.employee.name = 'current user';
-      this.employee.emailAddress = 'email';
+      // this.employee.full_name = 'current user';
+      // this.employee.emailAddress = 'email';
     }
   }
 
@@ -131,6 +133,11 @@ export class AddComponent implements OnInit {
   }
 
   onSubmit() {
+    this.employee.applied_by  = this.currentUser.full_name;
+    this.employee.paid_unpaid = "Paid";
+    this.employee.status = "Pending";
+    this.employee.type = (this.isHalfDay)?("Half Day"):("Full Day"); 
+
     if (this.employeeForm.valid) {
       const dialogRef = this.dialog.open(LeaveSubmitDialogComponent, {
   //      width: '600px',
@@ -141,7 +148,8 @@ export class AddComponent implements OnInit {
         console.log('The dialog was closed ', result);
         if (result) {
           console.log('True returned');
-          this.saveEmployee();
+          this.saveEmployeeLeave();
+          console.log("Leave Data: ",this.employee)
           this.toastr.success('Leave Added!', 'Success!');
         }
       });
@@ -173,9 +181,10 @@ export class AddComponent implements OnInit {
     this.goBack();
   }
 
-  saveEmployee() {
+  saveEmployeeLeave() {
     // this.employee.department = this.selectedDepartment;
-    this.employeeService.addEmployeePayrollData(this.employee).subscribe(
+    console.log(this.selectedUserMailAddress)
+    this.employeeService.addEmployeeLeaveData(this.employee, this.selectedUserMailAddress).subscribe(
       (data) => {
         console.log('Saved', data);
         window.location.reload();
@@ -191,9 +200,9 @@ export class AddComponent implements OnInit {
   }
 
   getUsers() {
-    this.userService.getAllUsers().subscribe((data: ResponseEntity) => {
+    this.userService.getAllUsers().subscribe((data: any) => {
       console.log(data);
-      this.users = data.data;
+      this.users = data;
       console.log('Users data', this.users);
     });
   }
@@ -204,25 +213,25 @@ export class AddComponent implements OnInit {
   }
 
   dateTest() {
-    console.log('Startdate: ', this.employee.leaveStartDate);
-    console.log('Enddate: ', this.employee.leaveEndDate);
+    console.log('Startdate: ', this.employee.leave_start_date);
+    console.log('Enddate: ', this.employee.leave_end_date);
   }
 
   getUserById() {
     let email = localStorage.getItem('email');
     console.log(email);
-    this.userService.getUserById(email!).subscribe((data: ResponseEntity) => {
-      console.log(data.data);
-      this.currentUser = data.data;
+    this.userService.getUserById(email!).subscribe((data: any) => {
+      console.log(data);
+      this.currentUser = data;
       console.log('Current User', this.currentUser);
     });
   }
 
   setFormEmail(event: any) {
     let user = this.users.find((obj) => {
-      return obj.fullName === event.value;
+      return obj.full_name === event.value;
     });
     console.log('Selected ', user);
-    this.employee.emailAddress = user!.emailId;
+    this.selectedUserMailAddress = user!.emailId;
   }
 }

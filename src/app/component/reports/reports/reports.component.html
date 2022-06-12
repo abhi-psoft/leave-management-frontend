@@ -1,0 +1,172 @@
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Reports</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  <div class="filters">
+    <mat-radio-group aria-label="Select an option"  [(ngModel)]="filter" (change)="radioChange()">
+        <mat-radio-button value="weekly-all" style="margin-right: 20px;"> Last Week data </mat-radio-button>
+        <mat-radio-button value="monthly-all" style="margin-right: 20px;"> Last Month data</mat-radio-button>
+        <mat-radio-button value="date-range" style="margin-right: 20px;"> By date range</mat-radio-button>
+    
+      </mat-radio-group>
+      <div class="date-range" *ngIf="filter==='date-range'">
+        <mat-form-field appearance="fill" >
+            <mat-label>Select a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker" >
+              <input required matStartDate [(ngModel)]="startDate"
+                placeholder="Start date" />
+              <input matEndDate [(ngModel)]="endDate"
+                placeholder="End date" (dateChange)="dateChange()"/>
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+      </div>
+      <span class="example-fill-remaining-space"></span>
+      <div class="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          [(ngModel)]="searchText"
+        />
+        <button  mat-stroked-button matBadgePosition="before" matBadgeColor="accent"mat-button (click)="resetFilter()">Reset</button>
+        
+      </div>
+  </div>
+  <div class="all-data" id="content" #content *ngIf="filter===null">
+
+    <table >
+        <tr>
+            <th>Sr. No.</th>
+            <th> Employee Id </th>
+            <th> Name </th>
+            <th> Designation </th>
+            <th> Leave Date </th>
+            <th> Leave End Date </th>
+            <th> Reason </th>
+            <th> Type </th>
+            <th> Status </th>
+        </tr>
+        <tr *ngFor="let data of leaveEmpData | filter: searchText; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{data.employee_id}}</td>
+            <td>{{data.full_name}}</td>
+            <td>{{data.designation}}</td>
+            <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.reason}}</td>
+            <td>{{data.type}}</td>
+            <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
+
+        </tr>
+    </table>
+    
+  </div>
+  <!-- Weekly -->
+
+  <div class="all-data" id="content" #content *ngIf="filter==='weekly-all'">
+
+    <table >
+        <tr>
+            <th>Sr. No.</th>
+            <th> Employee Id </th>
+            <th> Name </th>
+            <th> Designation </th>
+            <th> Leave Date </th>
+            <th> Leave End Date </th>
+            <th> Reason </th>
+            <th> Type </th>
+            <th> Status </th>
+        </tr>
+        <tr *ngFor="let data of leaveEmpData | filter: searchText; let i = index">
+            <ng-container *ngIf="isInRange(data.leave_start_date,7)">
+            <td>{{ i + 1 }}</td>
+            <td>{{data.employee_id}}</td>
+            <td>{{data.full_name}}</td>
+            <td>{{data.designation}}</td>
+            <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.reason}}</td>
+            <td>{{data.type}}</td>
+            <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
+            </ng-container>
+        </tr>
+    </table>
+    
+  </div>
+
+  <!-- Monthly -->
+  <div class="all-data" id="content" #content *ngIf="filter==='monthly-all'">
+
+    <table >
+        <tr>
+            <th>Sr. No.</th>
+            <th> Employee Id </th>
+            <th> Name </th>
+            <th> Designation </th>
+            <th> Leave Date </th>
+            <th> Leave End Date </th>
+            <th> Reason </th>
+            <th> Type </th>
+            <th> Status </th>
+        </tr>
+        <tr *ngFor="let data of leaveEmpData | filter: searchText; let i = index">
+            <ng-container *ngIf="isInRange(data.leave_start_date,30)">
+            <td>{{ i + 1 }}</td>
+            <td>{{data.employee_id}}</td>
+            <td>{{data.full_name}}</td>
+            <td>{{data.designation}}</td>
+            <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.reason}}</td>
+            <td>{{data.type}}</td>
+            <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
+            </ng-container>
+        </tr>
+    </table>
+  </div>
+  <!-- By Date Range -->
+
+  <div class="all-data" id="content" #content *ngIf="showByDate">
+
+    <table >
+        <tr>
+            <th>Sr. No.</th>
+            <th> Employee Id </th>
+            <th> Name </th>
+            <th> Designation </th>
+            <th> Leave Date </th>
+            <th> Leave End Date </th>
+            <th> Reason </th>
+            <th> Type </th>
+            <th> Status </th>
+        </tr>
+        <tr *ngFor="let data of leaveEmpData | filter: searchText; let i = index">
+            <ng-container *ngIf="isDateBetween(data.leave_start_date)">
+            <td>{{ i + 1 }}</td>
+            <td>{{data.employee_id}}</td>
+            <td>{{data.full_name}}</td>
+            <td>{{data.designation}}</td>
+            <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.reason}}</td>
+            <td>{{data.type}}</td>
+            <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
+            </ng-container>
+        </tr>
+    </table>
+  </div>
+  <button mat-stroked-button matBadgePosition="before" matBadgeColor="accent" style="margin-top: 10px; float: right;" mat-button (click)="saveExcel()"><img src="./assets/icons/xls.png" alt="excel" style="width: 18px;">
+    Generate Excel</button>
+  <button mat-stroked-button matBadgePosition="before" matBadgeColor="accent" style="margin-top: 10px; float: right;" mat-button (click)="savePdf()"><img src="./assets/icons/pdf.png" alt="excel" style="width: 18px;">
+  Generate PDF</button>
+</div>

@@ -5,6 +5,9 @@ import { Leave } from 'src/app/model/leave';
 import { leaves } from 'src/app/model/constants/data-constants';
 import { EmployeeService } from 'src/app/service/employee.service';
 import { Employee } from 'src/app/model/employee';
+import { UserService } from 'src/app/service/user.service';
+import { ResponseEntity } from 'src/app/model/response';
+import { LeaveData } from 'src/app/model/leave-data';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,28 +15,47 @@ import { Employee } from 'src/app/model/employee';
 })
 export class DashboardComponent implements OnInit {
   public totalLeaves: number = 20;
-  public usedLeaves: number = 15;
-  public remained: number = this.totalLeaves - this.usedLeaves;
+  public usedLeaves!: number;
+  public remained!: number ;
   leaves: Leave[] = leaves;
   currentDate: Date = new Date();
-  username: string = 'Abhishek Suryawanshi';
+  username: string = '';
   employees!: Employee[] ;
-  leavesNum: any = (this.usedLeaves/this.totalLeaves)*100;
+  leavesNum: any = 0;
   breakpoint!: number;
   leaveRequests: number = 9;
   currentUserRole!: string;
-  
+  user!: any;
+  designation!:string;
+  doj!:string;
+  leaveData!: LeaveData[];
+  allLeavesData!: LeaveData[];
+  request_count!: number;
   constructor(
     public headerService: HeaderService,
     private routerlink: Router,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
+
+    this.userService.getUserById(localStorage.getItem('email')!).subscribe((data: any)=>{
+      console.log("user is: ", data);
+      this.user = data;
+      this.currentUserRole = data.role;
+      this.username = data.full_name;
+      this.usedLeaves = data.leaves_taken;
+      this.remained = this.totalLeaves - this.usedLeaves;
+      this.leavesNum = (this.usedLeaves/this.totalLeaves)*100;
+      this.doj = data.doj;
+      this.designation = data.designation;
+    })
+    console.log("Role is",this.currentUserRole, localStorage.getItem('email'));
     this.breakpoint = (window.innerWidth <= 1000) ? 2 : 5;
     this.headerService.showHeader();
-    this.getEmployees();
-    this.currentUserRole = localStorage.getItem('role')!;
+    this.getAllLeaves();
+    this.getLeavesByEmployee();
   }
 
   onResize(event: any) {
@@ -49,13 +71,8 @@ export class DashboardComponent implements OnInit {
     this.routerlink.navigate(['/add']);
   }
 
-  private getEmployees() {
-    this.employeeService.getAllEmployee().subscribe((data) => {
-      this.employees = data;
-    });
-  }
-
-  isDateGreater(startdate: Date, currentDate: Date) {
+  isDateGreater(startdateString: string, currentDate: Date) {
+    let startdate = new Date(startdateString);
     if (startdate.getFullYear() > currentDate.getFullYear()) {
       return true;
     } else if (startdate.getFullYear() === currentDate.getFullYear()) {
@@ -83,5 +100,22 @@ export class DashboardComponent implements OnInit {
     } else {
       return false
     }
+  }
+
+  getAllLeaves(){
+    this.employeeService.getAllEmployee().subscribe((data: any[]) => {
+      this.allLeavesData = data;
+      console.log("Length: ",data.length);
+      let filtered = data.filter(obj => obj.status === "Pending");
+      console.log("Length2: ",filtered.length);
+      this.request_count = filtered.length;
+    });
+  }
+
+  getLeavesByEmployee(){
+    this.employeeService.getLeavesByEmployee(localStorage.getItem('email')!).subscribe((data: any[])=>{
+      this.leaveData = data;
+      console.log("Leaves for current",this.leaveData);
+    });
   }
 }

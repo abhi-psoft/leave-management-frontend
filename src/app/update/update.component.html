@@ -1,17 +1,14 @@
-<div class="form-content" style="margin-top: 65px">
-  <!-- <form   (ngSubmit)="onSubmit()" >                  -->
+<!-- <div class="form-content" style="margin-top: 65px">
+
   <form [formGroup]="employeeForm">
     <div class="form-head">Employee Update Leave form</div>
     <h5 class="text-danger">* indicates mandatory Fields</h5>
 
-    <!-- Name -->
     <div class="row-content">
       <label for="name " style="color: red">*</label>
       <label class="label-text" for="name"
         ><span style="color: red"> <small></small></span>FullName</label
       >
-      <!-- <input formControlName="name" [(ngModel)]= "employee.name" name="name" class="input" type="text" id="first" name="name"
-              placeholder="Your name.." required [ngModelOptions]= "{ standalone: true }" />     -->
       <input
         formControlName="name"
         [(ngModel)]="employee.name"
@@ -33,15 +30,11 @@
       >
     </div>
 
-    <!-- Email Address -->
     <div class="row-content">
       <label for="name " style="color: red">*</label>
       <label class="label-text" for="emailAddress"
         ><span style="color: red"> <small></small></span>Email
       </label>
-
-      <!-- <input formControlName="name" [(ngModel)]= "employee.name" name="name" class="input" type="text" id="first" name="name"
-              placeholder="Your name.." required [ngModelOptions]= "{ standalone: true }" />     -->
       <input
         formControlName="emailAddress"
         [(ngModel)]="employee.emailAddress"
@@ -65,7 +58,6 @@
       >
     </div>
 
-    <!-- Leave Type -->
     <div class="row-content">
       <label for="emailAddress " style="color: red">*</label>
       <label class="label-text" for="leaveType" style="margin-left: -5px"
@@ -120,7 +112,6 @@
       </div>
     </div>
 
-    <!-- Date -->
     <div class="row-content">
       <label for="emailAddress " style="color: red">*</label>
       <label for="leaveStartDate" class="label-text" style="margin-left: -5px"
@@ -176,7 +167,7 @@
       >
     </div>
 
-    <!-- Notes -->
+
     <div class="row-content">
       <label for="leaveEndDate " style="color: red">*</label>
       <label class="label-text" for="notes" style="margin-left: -5px"
@@ -203,7 +194,6 @@
       >
     </div>
 
-    <!-- <Submit, Cancel, Reset Buttons -->
     <div class="buttonParent">
       <a
         routerLink="/home"
@@ -224,14 +214,10 @@
           Update
         </button>
 
-        <!-- <button type="button" class="button submitButton"  id="submitButton " (click)= "onSubmit()">Update</button> -->
-
-        <!-- <button type="button"  [attr.disabled]="!employeeForm.valid ? true : null"  (click)="onSubmit()" style=" margin-left: 75px;
-             margin-right: 75px;">Update</button>  -->
         <button type="button" class="resetButton button" (click)="clearForm()">
           Reset
         </button>
       </div>
     </div>
   </form>
-</div>
+</div> -->

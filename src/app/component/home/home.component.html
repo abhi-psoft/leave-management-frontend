@@ -1,11 +1,25 @@
-<div class="main-content" style="margin-left: -110px; margin-right: -110px">
-  <div class="header-content" [hidden]=true>
+
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Your Leaves</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+<div class="main-content" style="margin-left: -110px; margin-right: -110px" id="content" #content>
+  <!-- <div class="header-content">
+    
     <div class="emp-detail-text" style="position: relative; top: 54px">
       Employee Leave Details
     </div>
-  </div>
+  </div> -->
   <div class="row">
     <div class="col-md-8"> 
+      <button mat-raised-button color="primary" (click)="ngOnInit()">Refresh</button>
       <button mat-raised-button color="primary" (click)="navigateToAddLeave()">
         <span style="margin-top: 20px;"> Apply New Leave </span>
         <span style="font-size: 25px; margin-left: 10px;">+</span>
@@ -20,7 +34,7 @@
         [(ngModel)]="name"
       />
     </div>
-    <div class="col-md-2"></div>
+
   </div>
   <br />
 
@@ -29,8 +43,8 @@
       <thead>
         <tr>
           <th>&nbsp; &nbsp;Id</th>
-          <th class="text-center">Name</th>
-          <th class="text-center">Email Address</th>
+          <th class="text-center">Applied By</th>
+          <!-- <th class="text-center">Email Address</th> -->
           <th class="text-center" style="word-spacing: 5px">Leave Type</th>
           <th class="text-center">Reason</th>
 
@@ -42,32 +56,32 @@
         </tr>
       </thead>
 
-      <tr *ngFor="let employee of employees | filter: name; let i = index">
+      <tr *ngFor="let leave of leaveData | filter: name; let i = index">
         <td style="margin-top: 9px">{{ i + 1 }}</td>
-        <td>{{ employee.name }}</td>
-        <td>{{ employee.emailAddress }}</td>
-        <td>{{ employee.leaveType }}</td>
-        <td style="width: 19%">{{ employee.notes }}</td>
+        <td>{{ leave.applied_by }}</td>
+        <td>{{ leave.type }}</td>
+        <td>{{ leave.reason }}</td>
+        <!-- <td style="width: 19%">{{ employee.notes }}</td> -->
 
-        <td>{{ employee.leaveStartDate | date: "MM/dd/yyyy" }}</td>
-        <td>{{ employee.leaveEndDate | date: "MM/dd/yyyy" }}</td>
+        <td>{{ leave.leave_start_date | date: "fullDate" }}</td>
+        <td>{{ leave.leave_end_date | date: "fullDate" }}</td>
 
         <td>
-          <button [disabled]="!employee.status" (click)="onClickDelete(employee.id)">
+          <button [disabled]="!leave.status" (click)="onClickDelete(leave.id)">
             <img
               src="../../../assets/icons/delete-black-18dp.svg"
               alt="delete"
             />
             <i class="bi bi-trash-fill"></i>
           </button> &nbsp;
-          <button [disabled]="!employee.status" (click)="updateEmployeePayrollById(employee.id)">
+          <button [disabled]="!leave.status" (click)="updateEmployeePayrollById(leave.id)">
             <img
               src="../../../assets/icons/create-black-18dp.svg"
               alt="edit"
             />
           </button>
         </td>
-        <td><span [ngClass]="{'active':employee.status==true,'inactive':employee.status==false}"></span></td>
+        <td><span [ngClass]="{'_active':leave.status=='Approved','inactive':leave.status=='Rejected', 'pending':leave.status=='Pending'}"> {{leave.status}}</span></td>
       </tr>
     </table>
   </div>

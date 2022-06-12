@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 })
 export class UpdateComponent implements OnInit {
   id!: number;
-  employee: Employee = new Employee(0, '', '', '', '', '', '',false);
+  employee: Employee = new Employee();
   public employeeForm!: FormGroup;
 
   minDateToFinish = new Subject<string>();
@@ -58,8 +58,8 @@ export class UpdateComponent implements OnInit {
     );
 
     this.employeeForm.setValue({
-      leaveStartDate: this.employee.leaveStartDate,
-      leaveEndDate: this.employee.leaveEndDate,
+      leaveStartDate: this.employee.leave_start_date,
+      leaveEndDate: this.employee.leave_end_date,
     });
   }
 

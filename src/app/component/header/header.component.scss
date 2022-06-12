@@ -7,20 +7,25 @@
 }
 
 .mat-toolbar{
-  height: 15%;
+  height:fit-content ;
   padding-left: 20px;
   margin-bottom: 0px;
+}
+.title-main{
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .title-1{
   font-size: xx-large;
   font-family:'Times New Roman', Times, serif;
-  padding-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 .title-2{
   font-size: medium;
   font-family:'Times New Roman', Times, serif;
-  padding: 10px;
 }
 
 .left-navigation{

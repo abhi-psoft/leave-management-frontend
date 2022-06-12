@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', response.token);
         this.userService.loginUser(response.token);
         this.getUserRole();
+        localStorage.setItem('email',this.credential.emailId);
         this.authenticationService.loggedIn();
         this.routerlink.navigate(['/dashboard']);
         this.toastr.success("Welcome!")
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit {
     this.userService.getUserRole(this.credential.emailId).subscribe((res: ResponseEntity)=>{
       console.log("Role is: ", res.data);
       localStorage.setItem('role', res.data)
-      localStorage.setItem('email',this.credential.emailId);
+      
     })
   }
 }

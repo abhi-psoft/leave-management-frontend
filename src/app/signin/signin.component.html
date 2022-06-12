@@ -5,7 +5,8 @@
     </mat-card-header>
     <mat-card-content>
       <form #userForm="ngForm" novalidate>
-        <table class="full-width" cellspacing="0">
+        <div class="main-div">
+        <table class="left-div" cellspacing="0">
           <tr>
             <td>
               <mat-form-field class="full-width">
@@ -44,6 +45,65 @@
          </td>
           </tr>
         </table>
+        <!--  -->
+        <table class="right-div" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="full-width">
+              <input matInput placeholder="Employee ID"required #empid="ngModel" type="text" name=empid ngModel required>
+              </mat-form-field>
+              <small class="text-danger" [hidden]="empid.valid || empid.untouched"> Minimum 4 letters
+            </small>
+            </td>
+          </tr>
+          <tr>
+          <td><mat-form-field class="example-full-width">
+            <input matInput placeholder="Leaves Allowed" name="leaves"  #leaves="ngModel"
+            [class.is-invalid]="leaves.invalid && leaves.touched" type="number"  ngModel required>
+          </mat-form-field>
+          <small class="text-danger" [hidden]="leaves.valid || leaves.untouched">Email is required
+        </small>
+       </td>
+        </tr>
+        <tr>
+            <td><mat-form-field class="example-full-width">
+              <!-- <input matInput placeholder="Roll" #password="ngModel" [class.is-invalid]="password.invalid && password.touched"
+              type="password" name="password" ngModel required pattern="[a-z]{4,}"> -->
+              <mat-label>Select Role</mat-label>
+              <mat-select required name="role" [(value)]= "userSignin.role">
+                <mat-option>-Select Roll-</mat-option>
+                <mat-option *ngFor="let role of roles" [value]=role.role_name>
+                  {{ role.role_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+         </td>
+          </tr>
+          <tr>
+            <td>
+              <!-- <mat-form-field class="example-full-width">
+              <input matInput placeholder="Password"required #phoneNumber="ngModel"
+              [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" name="phoneNumber"
+              ngModel required placeholder="Phone number" pattern="[0-9]{10}$">
+            </mat-form-field> -->
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a Date of Joining</mat-label>
+              <input matInput  [matDatepicker]="picker" #doj="ngModel" name="doj" ngModel/>
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+         </td>
+          </tr>
+          <tr><td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Designation" required #designation="ngModel"
+              [class.is-invalid]="designation.invalid && designation.touched" name="designation"
+              ngModel required>
+            </mat-form-field>
+          </td></tr>
+        </table>
+      </div>
         <div class="invalid" [hidden]= true>
             invalid credentials
         </div>

@@ -47,6 +47,11 @@ import { LeaveSubmitDialogComponent } from './dialogs/leave-submit-dialog/leave-
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ManageLeavesComponent } from './component/manage-leaves/manage-leaves.component';
+import { ReportsComponent } from './component/reports/reports/reports.component';
+import { AgGridModule } from 'ag-grid-angular';
+import {MatTableModule} from '@angular/material/table';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { ProfileComponent } from './component/profile/profile.component';
 @NgModule({
 
   declarations: [
@@ -60,7 +65,9 @@ import { ManageLeavesComponent } from './component/manage-leaves/manage-leaves.c
     DashboardComponent,
     CalendarComponent,
     LeaveSubmitDialogComponent,
-    ManageLeavesComponent, 
+    ManageLeavesComponent,
+    ReportsComponent,
+    ProfileComponent, 
   ],
   
   imports: [
@@ -90,7 +97,10 @@ import { ManageLeavesComponent } from './component/manage-leaves/manage-leaves.c
     MatSlideToggleModule,
     MatRadioModule,
     MatDialogModule,
-    MatBadgeModule
+    MatBadgeModule,
+    AgGridModule,
+    MatTableModule,
+    MatButtonToggleModule
   ],
   exports: [MatFormFieldModule, MatInputModule],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },         
