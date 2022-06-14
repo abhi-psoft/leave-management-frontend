@@ -9,4 +9,5 @@ export interface SignInModel {
     designation: string,
     leaves_allowed: number,
     doj: string
+    project_name: string;
 }

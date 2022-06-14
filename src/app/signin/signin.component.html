@@ -11,8 +11,7 @@
             <td>
               <mat-form-field class="full-width">
               <input matInput placeholder="Full Name"required #fullName="ngModel"
-              [class.is-invalid]="fullName.invalid && fullName.touched" type="text" name=fullName ngModel required
-              pattern="[A-Z][a-z]">
+              [class.is-invalid]="fullName.invalid && fullName.touched" type="text" name=fullName ngModel required>
               </mat-form-field>
               <small class="text-danger" [hidden]="fullName.valid || fullName.untouched"> Minimum 4 letters with capital letter
             </small>
@@ -30,10 +29,9 @@
         <tr>
             <td><mat-form-field class="example-full-width">
               <input matInput placeholder="Password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched"
-              type="password" name="password" ngModel required pattern="[a-z]{4,}">
+              type="password" name="password" ngModel required>
             </mat-form-field>
-            <small class="text-danger" [hidden]="password.valid || password.untouched">Minimum 4 letters
-            </small>
+    
          </td>
           </tr>
           <tr>
@@ -44,6 +42,13 @@
             </mat-form-field>
          </td>
           </tr>
+          <tr><td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Designation" required #designation="ngModel"
+              [class.is-invalid]="designation.invalid && designation.touched" name="designation"
+              ngModel required>
+            </mat-form-field>
+          </td></tr>
         </table>
         <!--  -->
         <table class="right-div" cellspacing="0">
@@ -80,6 +85,20 @@
          </td>
           </tr>
           <tr>
+            <td><mat-form-field class="example-full-width">
+              <!-- <input matInput placeholder="Roll" #password="ngModel" [class.is-invalid]="password.invalid && password.touched"
+              type="password" name="password" ngModel required pattern="[a-z]{4,}"> -->
+              <mat-label>Select Project</mat-label>
+              <mat-select required name="project" [(value)]= "userSignin.project_name">
+                <mat-option>-Select Project-</mat-option>
+                <mat-option *ngFor="let project of projects" [value]=project.project_name>
+                  {{ project.project_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+         </td>
+          </tr>
+          <tr>
             <td>
               <!-- <mat-form-field class="example-full-width">
               <input matInput placeholder="Password"required #phoneNumber="ngModel"
@@ -95,13 +114,6 @@
             </mat-form-field>
          </td>
           </tr>
-          <tr><td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Designation" required #designation="ngModel"
-              [class.is-invalid]="designation.invalid && designation.touched" name="designation"
-              ngModel required>
-            </mat-form-field>
-          </td></tr>
         </table>
       </div>
         <div class="invalid" [hidden]= true>

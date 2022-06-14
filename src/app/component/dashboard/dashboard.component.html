@@ -170,13 +170,13 @@
   <mat-grid-tile colspan="2" rowspan="2"> 
     <div class="card-body">
           <mat-grid-tile-header>
-            <span class="title-footer"> Your Leaves</span>
+            <span class="title-footer"><a routerLink="/home">Your Leaves</a> </span>
           </mat-grid-tile-header>
             <marquee behavior="scroll" direction="up">
           <div *ngFor="let leave of leaveData" class="list">
             <mat-list>
               <mat-list-item *ngIf="isDateGreater(leave.leave_start_date, currentDate)">
-                <button mat-button (click)="navigateToAllLeaves()">
+                <button mat-button (click)="navigateToAllLeaves()" style="width: 100%;">
                 <i class="fa fa-plane" style="margin-right: 15px"></i>
                {{ leave.leave_start_date | date: "fullDate" }} 
                 &nbsp; &nbsp; &nbsp; Leave is {{ leave.status }}
@@ -186,7 +186,10 @@
             </mat-list>
           </div>
         </marquee>
+        <div class="empty" *ngIf="leaveData.length === 0">
+          <span style="font-size: x-large; color: gray;"> No Leaves Found </span>
         </div>
+      </div>
   </mat-grid-tile>
 
 
@@ -199,19 +202,29 @@
       <div *ngFor="let employee of allLeavesData" class="list">
         <mat-list>
           <mat-list-item *ngIf="isDateBetween(employee.leave_start_date, employee.leave_end_date)">
-              {{ employee.idleave_transactions }} is on leave today!
+              {{ employee.full_name }} is on leave today!
             <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
       </div>
     </marquee>
+    <div class="empty" *ngIf="allLeavesData.length === 0">
+      <span style="font-size: large; color: gray;"> No data Found </span>
+    </div>
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile rowspan="1">
     <mat-grid-tile-header>
-      <span class="title-footer"> Title</span>
+      <span class="title-footer"> Your Team!</span>
     </mat-grid-tile-header>
+    <div class="list" *ngFor="let users of allUsers">
+      <mat-list>
+        <mat-list-item *ngIf="users.project === user.project_name">
+            {{users.full_name}}
+        </mat-list-item>
+      </mat-list>
+    </div>
   </mat-grid-tile>
 
   <mat-grid-tile colspan="1" rowspan="2">

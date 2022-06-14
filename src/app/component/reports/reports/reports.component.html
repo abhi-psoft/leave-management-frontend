@@ -10,14 +10,30 @@
       </div>
     </div>
   <div class="filters">
+      <div class="left-panel">
     <mat-radio-group aria-label="Select an option"  [(ngModel)]="filter" (change)="radioChange()">
         <mat-radio-button value="weekly-all" style="margin-right: 20px;"> Last Week data </mat-radio-button>
         <mat-radio-button value="monthly-all" style="margin-right: 20px;"> Last Month data</mat-radio-button>
         <mat-radio-button value="date-range" style="margin-right: 20px;"> By date range</mat-radio-button>
+        <mat-radio-button value="non-leave" style="margin-right: 20px;"> WFH | Business</mat-radio-button>
+        <mat-radio-button value="user-wise" style="margin-right: 20px;"> User-Wise</mat-radio-button>
     
       </mat-radio-group>
       <div class="date-range" *ngIf="filter==='date-range'">
-        <mat-form-field appearance="fill" >
+        <mat-form-field appearance="fill">
+            <mat-label>From</mat-label>
+            <input matInput  [matDatepicker]="picker1" #doj="ngModel" name="doj" [(ngModel)]="startDate"/>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="fill">
+            <mat-label>To</mat-label>
+            <input matInput  [matDatepicker]="picker2" #doj="ngModel" name="doj" [(ngModel)]="endDate" (dateChange)="dateChange()"/>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        <!-- <mat-form-field appearance="fill" >
             <mat-label>Select a date range</mat-label>
             <mat-date-range-input [rangePicker]="picker" >
               <input required matStartDate [(ngModel)]="startDate"
@@ -27,16 +43,18 @@
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
-          </mat-form-field>
+          </mat-form-field> -->
       </div>
+    </div>
       <span class="example-fill-remaining-space"></span>
-      <div class="search">
+      <div class="search" style="height: fit-content;">
         <input
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
           [(ngModel)]="searchText"
+          style="height: fit-content;"
         />
         <button  mat-stroked-button matBadgePosition="before" matBadgeColor="accent"mat-button (click)="resetFilter()">Reset</button>
         
@@ -57,20 +75,54 @@
             <th> Status </th>
         </tr>
         <tr *ngFor="let data of leaveEmpData | filter: searchText; let i = index">
+            <ng-container *ngIf="data.reason!='wfh' && data.reason!='business'">
             <td>{{ i + 1 }}</td>
             <td>{{data.employee_id}}</td>
             <td>{{data.full_name}}</td>
             <td>{{data.designation}}</td>
             <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
             <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
-            <td>{{data.reason}}</td>
-            <td>{{data.type}}</td>
+            <td>{{data.reason | uppercase}}</td>
+            <td>{{data.type | uppercase}}</td>
             <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
-
+            </ng-container>
         </tr>
     </table>
     
   </div>
+  <!-- wfh/business -->
+
+  <div class="all-data" id="content" #content *ngIf="filter==='non-leave'">
+
+    <table >
+        <tr>
+            <th>Sr. No.</th>
+            <th> Employee Id </th>
+            <th> Name </th>
+            <th> Designation </th>
+            <th> Leave Date </th>
+            <th> Leave End Date </th>
+            <th> Reason </th>
+            <th> Type </th>
+            <th> Status </th>
+        </tr>
+        <tr *ngFor="let data of leaveEmpData | filter: searchText; let i = index">
+            <ng-container *ngIf="data.reason==='wfh' || data.reason==='business'">
+            <td>{{ i + 1 }}</td>
+            <td>{{data.employee_id}}</td>
+            <td>{{data.full_name}}</td>
+            <td>{{data.designation}}</td>
+            <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
+            <td>{{data.reason | uppercase}}</td>
+            <td>{{data.type | uppercase}}</td>
+            <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
+            </ng-container>
+        </tr>
+    </table>
+    
+  </div>
+
   <!-- Weekly -->
 
   <div class="all-data" id="content" #content *ngIf="filter==='weekly-all'">
@@ -95,8 +147,8 @@
             <td>{{data.designation}}</td>
             <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
             <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
-            <td>{{data.reason}}</td>
-            <td>{{data.type}}</td>
+            <td>{{data.reason | uppercase}}</td>
+            <td>{{data.type | uppercase}}</td>
             <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
             </ng-container>
         </tr>
@@ -127,14 +179,45 @@
             <td>{{data.designation}}</td>
             <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
             <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
-            <td>{{data.reason}}</td>
-            <td>{{data.type}}</td>
+            <td>{{data.reason | uppercase}}</td>
+            <td>{{data.type | uppercase}}</td>
             <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
             </ng-container>
         </tr>
     </table>
   </div>
   <!-- By Date Range -->
+
+  <div class="all-data" id="content" #content *ngIf="filter==='user-wise'">
+
+    <table >
+        <tr>
+            <th>Sr. No.</th>
+            <th> Employee Id </th>
+            <th> Name </th>
+            <th>Total Applicable Leaves</th>
+            <th>Leaves Applied [{{currentYear}}] &nbsp;  
+                <!-- <select name="years" id="years" (change)="selectedYear()" [(ngModel)]="currentYear">
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+            </select> -->
+        </th>
+        </tr>
+        <tr *ngFor="let data of usersCurrentYearLeaves | filter: searchText; let i = index">
+            <ng-container>
+            <td>{{ i + 1 }}</td>
+            <td>{{data.employee_id}}</td>
+            <td>{{data.full_name}}</td>
+            <td>{{data.leaves_allowed}}</td>
+            <td>{{data.leaves_taken_current}}</td>
+            <!-- <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td> -->
+            </ng-container>
+        </tr>
+    </table>
+  </div>
 
   <div class="all-data" id="content" #content *ngIf="showByDate">
 
@@ -158,15 +241,16 @@
             <td>{{data.designation}}</td>
             <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
             <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
-            <td>{{data.reason}}</td>
-            <td>{{data.type}}</td>
+            <td>{{data.reason | uppercase}}</td>
+            <td>{{data.type | uppercase}}</td>
             <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td>
             </ng-container>
         </tr>
     </table>
   </div>
+
   <button mat-stroked-button matBadgePosition="before" matBadgeColor="accent" style="margin-top: 10px; float: right;" mat-button (click)="saveExcel()"><img src="./assets/icons/xls.png" alt="excel" style="width: 18px;">
-    Generate Excel</button>
+    Export Excel</button>
   <button mat-stroked-button matBadgePosition="before" matBadgeColor="accent" style="margin-top: 10px; float: right;" mat-button (click)="savePdf()"><img src="./assets/icons/pdf.png" alt="excel" style="width: 18px;">
-  Generate PDF</button>
+  Export PDF</button>
 </div>

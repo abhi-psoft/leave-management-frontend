@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ResponseEntity } from '../model/response';
 import { AuthenticationService } from '../service/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import { SharedHeaderService } from '../component/header/shared-header.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService, 
     private routerlink: Router, 
     private authenticationService: AuthenticationService,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService,
+    private sharedHeaderService: SharedHeaderService) {}
 
   ngOnInit(): void {}
 
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
   getUserRole(){
     this.userService.getUserRole(this.credential.emailId).subscribe((res: ResponseEntity)=>{
       console.log("Role is: ", res.data);
+      this.sharedHeaderService.roleSubject.next(res.data);
       localStorage.setItem('role', res.data)
       
     })

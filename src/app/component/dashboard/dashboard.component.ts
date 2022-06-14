@@ -8,6 +8,7 @@ import { Employee } from 'src/app/model/employee';
 import { UserService } from 'src/app/service/user.service';
 import { ResponseEntity } from 'src/app/model/response';
 import { LeaveData } from 'src/app/model/leave-data';
+import { SharedHeaderService } from '../header/shared-header.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -26,36 +27,42 @@ export class DashboardComponent implements OnInit {
   leaveRequests: number = 9;
   currentUserRole!: string;
   user!: any;
+  allUsers!: any[];
   designation!:string;
   doj!:string;
-  leaveData!: LeaveData[];
-  allLeavesData!: LeaveData[];
+  leaveData: LeaveData[] = [];
+  allLeavesData!: any[];
   request_count!: number;
   constructor(
     public headerService: HeaderService,
     private routerlink: Router,
     private employeeService: EmployeeService,
-    private userService: UserService
+    private userService: UserService,
+    private sharedHeaderService: SharedHeaderService
   ) {}
 
   ngOnInit(): void {
-
+    this.sharedHeaderService.roleSubject.next(localStorage.getItem('role')!);
     this.userService.getUserById(localStorage.getItem('email')!).subscribe((data: any)=>{
       console.log("user is: ", data);
       this.user = data;
       this.currentUserRole = data.role;
       this.username = data.full_name;
+      this.totalLeaves = data.leaves_allowed;
       this.usedLeaves = data.leaves_taken;
       this.remained = this.totalLeaves - this.usedLeaves;
       this.leavesNum = (this.usedLeaves/this.totalLeaves)*100;
       this.doj = data.doj;
       this.designation = data.designation;
+      //Set HEADER DATA
+      this.sharedHeaderService.userSubject.next(data);
     })
     console.log("Role is",this.currentUserRole, localStorage.getItem('email'));
     this.breakpoint = (window.innerWidth <= 1000) ? 2 : 5;
     this.headerService.showHeader();
     this.getAllLeaves();
     this.getLeavesByEmployee();
+    this.getAllUsers();
   }
 
   onResize(event: any) {
@@ -103,7 +110,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAllLeaves(){
-    this.employeeService.getAllEmployee().subscribe((data: any[]) => {
+    this.employeeService.getLeavesEmployeeDetails().subscribe((data: any[]) => {
       this.allLeavesData = data;
       console.log("Length: ",data.length);
       let filtered = data.filter(obj => obj.status === "Pending");
@@ -116,6 +123,13 @@ export class DashboardComponent implements OnInit {
     this.employeeService.getLeavesByEmployee(localStorage.getItem('email')!).subscribe((data: any[])=>{
       this.leaveData = data;
       console.log("Leaves for current",this.leaveData);
+    });
+  }
+
+  getAllUsers(){
+    this.userService.getAllUsers().subscribe((data: any[])=>{
+      this.allUsers = data;
+      console.log("all users: ",this.allUsers)
     });
   }
 }

@@ -29,6 +29,9 @@ export class HomeComponent implements OnInit {
       this.getEmployees();
     }, 3000);
     this.getLeavesByEmployee();
+    this.employeeService.refreshRrequired.subscribe(()=>{
+      this.getLeavesByEmployee();
+    });
   }
 
   private getEmployees() {
@@ -39,14 +42,14 @@ export class HomeComponent implements OnInit {
   }
 
   updateEmployeePayrollById(id: number) {
-    this.router.navigate(['update', id]);
     console.log(id);
+    this.router.navigate(['update', id]);
   }
 
   deleteEmployee(id: number) {
     this.employeeService.deleteEmployeePayroll(id).subscribe((data) => {
       console.log(data);
-      this.getEmployees();
+      //this.getEmployees();
     });
   }
 
@@ -57,18 +60,20 @@ export class HomeComponent implements OnInit {
   }
 
   onClickDelete(id: number) {
+    console.log(id)
     var result = confirm('Want to delete the record?');
     if (result) {
       //Logic to delete the item
-      this.employeeService.deleteEmployeePayroll(id).subscribe();
+      //this.employeeService.deleteEmployeePayroll(id).subscribe();
+      this.deleteEmployee(id);
       console.log('delete successfully');
-      this.toastr.error('Leave Deleted!', 'Deleted!');
-
+      this.toastr.info('Leave Deleted!', 'Deleted!');
       window.location.reload();
+      //window.location.reload();
     } else {
       console.log('Not Delete');
     }
-    // window.location.reload();
+
   }
 
   navigateToAddLeave(){

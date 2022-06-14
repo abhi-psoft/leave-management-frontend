@@ -18,17 +18,21 @@
   <span class="example-fill-remaining-space"></span>
 
   <div *ngIf="headerService.visible" class="navigation-links">
+    <div class="user-data">
+      <span>{{user.full_name | uppercase}} </span>
+    <span> <span class="dot"></span> Logged in as {{role | uppercase}}  </span>
+    </div>
     <div class="button-container">
       <button mat-fab color="accent" style="margin-right: 5px;" aria-label="Example icon button with a home icon" (click)="navigateToDashboard()">
         <mat-icon>home</mat-icon>
       </button>
       <button mat-stroked-button routerLink="/profile">Profile</button>
-      <button mat-stroked-button routerLink="/reports">Reports</button>
+      <button *ngIf="role === 'HR'" mat-stroked-button routerLink="/reports">Reports</button>
     </div>
   </div>
  
   <button  (click)="logout()" 
-  mat-stroked-button matBadgePosition="before" >
+  mat-stroked-button style="margin-bottom: 8px;">
        Logout
   </button>
 </mat-toolbar>

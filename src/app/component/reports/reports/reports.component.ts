@@ -6,6 +6,8 @@ import { AutoScrollService, ColDef } from 'ag-grid-community';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
 import { EmployeeService } from 'src/app/service/employee.service';
+import { UserService } from 'src/app/service/user.service';
+import { CurrentYearLeaves } from 'src/app/model/currentYearLeaves';
 
 @Component({
   selector: 'app-reports',
@@ -32,9 +34,13 @@ export class ReportsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.leaveEmpData);
   searchText: any;
   showByDate: boolean = false;
+  allUsers!: any[];
+  usersCurrentYearLeaves: CurrentYearLeaves[] = [];
+  public currentYear = new Date().getFullYear();
   constructor(
     private employeeService: EmployeeService,
-    private _liveAnnouncer: LiveAnnouncer
+    private _liveAnnouncer: LiveAnnouncer,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +53,7 @@ export class ReportsComponent implements OnInit {
     this.employeeService.getLeavesEmployeeDetails().subscribe((data: any[]) => {
       console.log('The DATA: ', data);
       this.leaveEmpData = data;
+      this.getAllUsers();
     });
   }
 
@@ -69,18 +76,18 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  saveExcel(): void
-  {
+  saveExcel(): void {
     /* pass here the table id */
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(this.element.nativeElement);
- 
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(
+      this.element.nativeElement
+    );
+
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
-    XLSX.writeFile(wb, "report.xlsx");
- 
+
+    /* save to file */
+    XLSX.writeFile(wb, 'report.xlsx');
   }
 
   /** Announce the change in sort state for assistive technology. */
@@ -137,5 +144,54 @@ export class ReportsComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe((data: any[]) => {
+      this.allUsers = data;
+      console.log('all users: ', this.allUsers);
+
+      this.countCurrentYearLeaves();
+      console.log('countCurrentYearLeaves', this.usersCurrentYearLeaves);
+    });
+  }
+
+  countCurrentYearLeaves() {
+    this.allUsers.forEach((user) => {
+       {
+        let leaveCounter = 0;
+        let userCurrent: CurrentYearLeaves = {
+          employee_id: '',
+          full_name: '',
+          leaves_allowed: 0,
+          leaves_taken_current: 0,
+        };
+        this.leaveEmpData.forEach((leave) => {
+          if (user.employee_id === leave.employee_id) {
+            userCurrent.employee_id = user.employee_id;
+            userCurrent.full_name = user.full_name;
+            userCurrent.leaves_allowed = user.leaves_allowed;
+            let date = new Date(leave.leave_start_date);
+            let year = date.getFullYear();
+            if (year === this.currentYear) {
+              leaveCounter++;
+              console.log('UserLeave: ', user, leave);
+            }
+          }
+          else{
+            userCurrent.employee_id = user.employee_id;
+            userCurrent.full_name = user.full_name;
+            userCurrent.leaves_allowed = user.leaves_allowed;
+          }
+          userCurrent.leaves_taken_current = leaveCounter;
+        });
+        this.usersCurrentYearLeaves.push(userCurrent);
+      }
+    });
+  }
+
+  selectedYear(){
+    console.log("hello")
+    this.countCurrentYearLeaves();
   }
 }

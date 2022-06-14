@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from '../model/employee';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 
 
 @Injectable({
@@ -14,6 +14,12 @@ export class EmployeeService {
   // private getURL =    'http://localhost:8080/employee-payroll-app/get/5';
   // private updateURL = 'http://localhost:8080/employee-payroll-app/update/{id}';
   // private deleteURL = 'http://localhost:8080/employee-payroll-app/delete/\';
+
+  private _refreshRequired = new Subject<void>();
+
+  get refreshRrequired(){
+    return this._refreshRequired;
+  }
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,7 +40,11 @@ export class EmployeeService {
   }
 
   deleteEmployeePayroll(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL}/delete/${id}`);
+    return this.httpClient.delete(`${this.baseURL}/delete/${id}`).pipe(
+      tap(()=>{
+        this.refreshRrequired.next();
+      })
+    );
   }
 
   send(employee: Employee): Observable<Object>{

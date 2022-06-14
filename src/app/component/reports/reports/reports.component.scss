@@ -26,7 +26,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
-   
+    margin-bottom: 50px;
 }
 .example-fill-remaining-space{
     flex:0 0 auto;
@@ -64,5 +64,10 @@ table {
    color: blue;
 }
 
-
+.date-range{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-left: 100px;
+}
 

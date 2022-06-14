@@ -18,8 +18,12 @@
     flex-direction: row;
     justify-content: center;
     font-size: x-large;
+    
   }
-
+  .mat-card-content>:last-child:not(.mat-card-footer) {
+    margin-bottom: 0;
+    width: 100%;
+}
   mat-card-header ,
   mat-card-title {
     display: flex;

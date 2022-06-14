@@ -19,7 +19,6 @@
   </div> -->
   <div class="row">
     <div class="col-md-8"> 
-      <button mat-raised-button color="primary" (click)="ngOnInit()">Refresh</button>
       <button mat-raised-button color="primary" (click)="navigateToAddLeave()">
         <span style="margin-top: 20px;"> Apply New Leave </span>
         <span style="font-size: 25px; margin-left: 10px;">+</span>
@@ -59,27 +58,27 @@
       <tr *ngFor="let leave of leaveData | filter: name; let i = index">
         <td style="margin-top: 9px">{{ i + 1 }}</td>
         <td>{{ leave.applied_by }}</td>
-        <td>{{ leave.type }}</td>
-        <td>{{ leave.reason }}</td>
+        <td>{{ leave.type | uppercase}}</td>
+        <td>{{ leave.reason | uppercase}}</td>
         <!-- <td style="width: 19%">{{ employee.notes }}</td> -->
 
         <td>{{ leave.leave_start_date | date: "fullDate" }}</td>
         <td>{{ leave.leave_end_date | date: "fullDate" }}</td>
 
         <td>
-          <button [disabled]="!leave.status" (click)="onClickDelete(leave.id)">
+          <button [disabled]="leave.status != 'Pending'" (click)="onClickDelete(leave.idleave_transactions)">
             <img
               src="../../../assets/icons/delete-black-18dp.svg"
               alt="delete"
             />
             <i class="bi bi-trash-fill"></i>
           </button> &nbsp;
-          <button [disabled]="!leave.status" (click)="updateEmployeePayrollById(leave.id)">
+          <!-- <button [disabled]="leave.status != 'Pending'" (click)="updateEmployeePayrollById(leave.idleave_transactions)">
             <img
               src="../../../assets/icons/create-black-18dp.svg"
               alt="edit"
             />
-          </button>
+          </button> -->
         </td>
         <td><span [ngClass]="{'_active':leave.status=='Approved','inactive':leave.status=='Rejected', 'pending':leave.status=='Pending'}"> {{leave.status}}</span></td>
       </tr>

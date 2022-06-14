@@ -15,7 +15,7 @@ export class UpdateComponent implements OnInit {
   id!: number;
   employee: Employee = new Employee();
   public employeeForm!: FormGroup;
-
+  public currentUserRole!: string;
   minDateToFinish = new Subject<string>();
   minDate: Date | undefined;
 
@@ -36,6 +36,7 @@ export class UpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUserRole = localStorage.getItem('role')!;
     this.id = this.route.snapshot.params['id'];
     this.employeeService.getEmployeePayrollDataById(this.id).subscribe(
       (data: any) => {

@@ -28,8 +28,8 @@
                 <td>{{data.full_name}}</td>
                 <td>{{data.leave_start_date | date: "dd/MM/yyyy"}}</td>
                 <td>{{data.leave_end_date | date: "dd/MM/yyyy"}}</td>
-                <td>{{data.reason}}</td>
-                <td>{{data.type}}</td>
+                <td>{{data.reason | uppercase}}</td>
+                <td>{{data.type | uppercase}}</td>
                 <td class="button-container">
                     <button mat-raised-button (click)="approveLeave(data)">Approve</button>
                     <button mat-raised-button (click)="rejectLeave(data.id)">Reject</button>
@@ -37,6 +37,9 @@
                 </ng-container>
             </tr>
         </table>
+
         
       </div>
+
+      
 </div>
