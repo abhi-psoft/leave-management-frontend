@@ -1,41 +1,52 @@
-
-
 <mat-toolbar color="primary" class="navigation">
   <div class="left-navigation">
     <div class="title-main">
-     <div class="title-1">
-       <img src=".\assets\images\psoft_logo.png" style="width: 100px;">
-       <!-- <span>Leave Management System</span> -->
+      <div class="title-1">
+        <img src=".\assets\images\psoft_logo.png" style="width: 100px" />
+        <!-- <span>Leave Management System</span> -->
       </div>
-     <div class="title-2">
-       <!-- <span>Prismatic Softwares Pvt. Ltd.</span> -->
-       <span>Prismatic Softwares Private Limited </span>
+      <div class="title-2">
+        <!-- <span>Prismatic Softwares Pvt. Ltd.</span> -->
+        <span>Prismatic Softwares Private Limited </span>
       </div>
-   </div>
-
-</div>
+    </div>
+  </div>
   <!-- This fills the remaining space of the current row -->
   <span class="example-fill-remaining-space"></span>
-
   <div *ngIf="headerService.visible" class="navigation-links">
     <div class="user-data">
-      <span>{{user.full_name | uppercase}} </span>
-    <span> <span class="dot"></span> Logged in as {{role | uppercase}}  </span>
+      <span>{{ user.full_name | uppercase }} </span>
+      <span>
+        <span class="dot"></span> Logged in as {{ role | uppercase }}
+      </span>
     </div>
+    <span style="margin-right: 40px; margin-top: auto; margin-bottom: auto;">
+      <mat-icon class="screen" style="font-size: xx-large;" *ngIf="!isFullScreen" (click)="openFullscreen()"
+        >fullscreen</mat-icon
+      >
+      <mat-icon class="screen" style="font-size: xx-large;" *ngIf="isFullScreen" (click)="closeFullscreen()"
+        >fullscreen_exit</mat-icon
+      >
+    </span>
     <div class="button-container">
-      <button mat-fab color="accent" style="margin-right: 5px;" aria-label="Example icon button with a home icon" (click)="navigateToDashboard()">
+      <button
+        mat-fab
+        color="accent"
+        style="margin-right: 5px"
+        aria-label="Example icon button with a home icon"
+        (click)="navigateToDashboard()"
+      >
         <mat-icon>home</mat-icon>
       </button>
       <button mat-stroked-button routerLink="/profile">Profile</button>
-      <button *ngIf="role === 'HR'" mat-stroked-button routerLink="/reports">Reports</button>
-      <button  (click)="logout()" 
-  mat-stroked-button style="margin-bottom: 8px;">
-       Logout
-  </button>
+      <button *ngIf="role === 'HR'" mat-stroked-button routerLink="/reports">
+        Reports
+      </button>
+      <button (click)="logout()" mat-stroked-button style="margin-bottom: 8px">
+        Logout
+      </button>
     </div>
   </div>
- 
-  
 </mat-toolbar>
 
 <!--
