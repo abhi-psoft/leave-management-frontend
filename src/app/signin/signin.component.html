@@ -1,19 +1,19 @@
 <mat-card class="main-card">
     <img class="logo" src="../../../assets/images/prissoft logo.png" />
     <mat-card-header>
-        <mat-card-title> Prismatic Softwares Private Limited </mat-card-title>
+        <mat-card-title> Leave Management System  </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form #userForm="ngForm" novalidate>
         <div class="main-div">
         <table class="left-div" cellspacing="0">
           <tr>
-            <td>
+            <td style="width: max-content;">
               <mat-form-field class="full-width">
               <input matInput placeholder="Full Name"required #fullName="ngModel"
               [class.is-invalid]="fullName.invalid && fullName.touched" type="text" name=fullName ngModel required>
-              </mat-form-field>
-              <small class="text-danger" [hidden]="fullName.valid || fullName.untouched"> Minimum 4 letters with capital letter
+            </mat-form-field>
+              <small class="text-danger" [hidden]="fullName.valid || fullName.untouched" style="width: 100%;"> Full Name is required
             </small>
             </td>
           </tr>
@@ -36,9 +36,9 @@
           </tr>
           <tr>
             <td><mat-form-field class="example-full-width">
-              <input matInput placeholder="Password"required #phoneNumber="ngModel"
+              <input matInput placeholder="Phone Number"required #phoneNumber="ngModel"
               [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" name="phoneNumber"
-              ngModel required placeholder="Phone number" pattern="[0-9]{10}$">
+              ngModel required placeholder="Phone Number" pattern="[0-9]{10}$">
             </mat-form-field>
          </td>
           </tr>
@@ -75,7 +75,7 @@
               <!-- <input matInput placeholder="Roll" #password="ngModel" [class.is-invalid]="password.invalid && password.touched"
               type="password" name="password" ngModel required pattern="[a-z]{4,}"> -->
               <mat-label>Select Role</mat-label>
-              <mat-select required name="role" [(value)]= "userSignin.role">
+              <mat-select required name="role" [(value)]= "userSignin.role" #role="ngModel" ngModel>
                 <mat-option>-Select Roll-</mat-option>
                 <mat-option *ngFor="let role of roles" [value]=role.role_name>
                   {{ role.role_name }}
@@ -89,7 +89,7 @@
               <!-- <input matInput placeholder="Roll" #password="ngModel" [class.is-invalid]="password.invalid && password.touched"
               type="password" name="password" ngModel required pattern="[a-z]{4,}"> -->
               <mat-label>Select Project</mat-label>
-              <mat-select required name="project" [(value)]= "userSignin.project_name">
+              <mat-select required name="project" [(value)]= "userSignin.project_name" #project="ngModel" ngModel>
                 <mat-option>-Select Project-</mat-option>
                 <mat-option *ngFor="let project of projects" [value]=project.project_name>
                   {{ project.project_name }}
@@ -107,8 +107,7 @@
             </mat-form-field> -->
             <mat-form-field appearance="fill">
               <mat-label>Choose a Date of Joining</mat-label>
-              <input matInput  [matDatepicker]="picker" #doj="ngModel" name="doj" ngModel/>
-              <mat-hint>MM/DD/YYYY</mat-hint>
+              <input  required matInput  [matDatepicker]="picker" #doj="ngModel" name="doj"  ngModel/>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -124,7 +123,8 @@
               <button mat-raised-button (click)="onSubmit(userForm)" color="primary">Signup</button>
             </div>
             <div class="button">
-                <button mat-raised-button (click)="login()" color="primary">Login</button>
+                <!-- <button mat-raised-button (click)="login()" color="primary">Login</button> -->
+                <a routerLink="/login">Click Here to Login</a>
             </div>
             </mat-card-actions>
         </form>

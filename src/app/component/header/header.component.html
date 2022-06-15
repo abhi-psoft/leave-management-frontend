@@ -9,7 +9,7 @@
       </div>
      <div class="title-2">
        <!-- <span>Prismatic Softwares Pvt. Ltd.</span> -->
-       <span>Leave Management System</span>
+       <span>Prismatic Softwares Private Limited </span>
       </div>
    </div>
 
@@ -28,13 +28,14 @@
       </button>
       <button mat-stroked-button routerLink="/profile">Profile</button>
       <button *ngIf="role === 'HR'" mat-stroked-button routerLink="/reports">Reports</button>
-    </div>
-  </div>
- 
-  <button  (click)="logout()" 
+      <button  (click)="logout()" 
   mat-stroked-button style="margin-bottom: 8px;">
        Logout
   </button>
+    </div>
+  </div>
+ 
+  
 </mat-toolbar>
 
 <!--

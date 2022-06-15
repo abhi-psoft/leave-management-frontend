@@ -196,15 +196,8 @@
             <th> Employee Id </th>
             <th> Name </th>
             <th>Total Applicable Leaves</th>
-            <th>Leaves Applied [{{currentYear}}] &nbsp;  
-                <!-- <select name="years" id="years" (change)="selectedYear()" [(ngModel)]="currentYear">
-                <option value="2018">2018</option>
-                <option value="2019">2019</option>
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-            </select> -->
-        </th>
+            <th>Leaves Applied [{{currentYear}}]</th>
+            <th>Leaves remained [{{currentYear}}]</th>
         </tr>
         <tr *ngFor="let data of usersCurrentYearLeaves | filter: searchText; let i = index">
             <ng-container>
@@ -213,6 +206,7 @@
             <td>{{data.full_name}}</td>
             <td>{{data.leaves_allowed}}</td>
             <td>{{data.leaves_taken_current}}</td>
+            <td>{{data.leaves_allowed - data.leaves_taken_current}}</td>
             <!-- <td><span [ngClass]="{'_active':data.status=='Approved','inactive':data.status=='Rejected', 'pending':data.status=='Pending'}"> {{data.status}}</span></td> -->
             </ng-container>
         </tr>

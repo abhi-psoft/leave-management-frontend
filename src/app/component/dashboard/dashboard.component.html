@@ -186,9 +186,6 @@
             </mat-list>
           </div>
         </marquee>
-        <div class="empty" *ngIf="leaveData.length === 0">
-          <span style="font-size: x-large; color: gray;"> No Leaves Found </span>
-        </div>
       </div>
   </mat-grid-tile>
 
@@ -208,9 +205,6 @@
         </mat-list>
       </div>
     </marquee>
-    <div class="empty" *ngIf="allLeavesData.length === 0">
-      <span style="font-size: large; color: gray;"> No data Found </span>
-    </div>
     </div>
   </mat-grid-tile>
 
@@ -250,4 +244,4 @@
       routerLink="/manage-leaves">
       <span class="my-float" >Requests</span>
     </button>
-    </span>>
+    </span>
