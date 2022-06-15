@@ -20,9 +20,9 @@
           <tr>
           <td><mat-form-field class="example-full-width">
             <input matInput placeholder="E-mail Id" name="emailId"  #emailId="ngModel"
-            [class.is-invalid]="emailId.invalid && emailId.touched" type="email"  ngModel required>
+            [class.is-invalid]="emailId.invalid && emailId.touched" type="email"  ngModel required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
           </mat-form-field>
-          <small class="text-danger" [hidden]="emailId.valid || emailId.untouched">Email is required
+          <small class="text-danger" [hidden]="emailId.valid || emailId.untouched">Valid Email is required
         </small>
        </td>
         </tr>
@@ -40,6 +40,8 @@
               [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched" name="phoneNumber"
               ngModel required placeholder="Phone Number" pattern="[0-9]{10}$">
             </mat-form-field>
+            <small class="text-danger" [hidden]="phoneNumber.valid || phoneNumber.untouched">Valid Phone Number is required
+            </small>
          </td>
           </tr>
           <tr><td>
@@ -124,7 +126,7 @@
             </div>
             <div class="button">
                 <!-- <button mat-raised-button (click)="login()" color="primary">Login</button> -->
-                <a routerLink="/login">Click Here to Login</a>
+                <a routerLink="/login" style="text-decoration: none;">Click Here to Login</a>
             </div>
             </mat-card-actions>
         </form>
